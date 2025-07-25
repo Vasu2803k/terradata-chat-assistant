@@ -4,12 +4,12 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn backend.api.main:app --host localhost --port 8000 --reload
     working_dir: /app
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/app
+      - .:/app
       - pip_cache:/tmp/pip-cache
     environment:
       - PYTHONUNBUFFERED=1
@@ -19,12 +19,13 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    command: streamlit run app.py --server.port=8501 --server.address=0.0.0.0
+    command: streamlit run frontend/app.py --server.port=8501 --server.address=localhost
     working_dir: /app
     ports:
       - "8501:8501"
     volumes:
-      - ./frontend:/app
+      - .:/app
+      - pip_cache:/tmp/pip-cache
     environment:
       - PYTHONUNBUFFERED=1
 

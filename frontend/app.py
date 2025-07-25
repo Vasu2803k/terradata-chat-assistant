@@ -171,7 +171,7 @@ try:
 except:
     past_chats = {}
 
-API_URL = "http://localhost:8000/api/v1/chat/"  # Adjust if backend runs elsewhere
+API_URL = "http://backend:8000/api/v1/chat/"  # Use Docker Compose service name for backend
 
 # --- Page config ---
 st.set_page_config(

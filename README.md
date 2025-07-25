@@ -3,6 +3,7 @@
 A multi-agent, document-aware assistant platform using FastAPI (backend), Streamlit (frontend), and LangChain/LangGraph for orchestration.  
 Supports document ingestion, retrieval, summarization, and reasoning over research and thesis documents.
 
+**Application will be available at localhost (http://localhost:8501/) after running manual script or docker containers. For docker containers, use this address to interact in browsers (http://localhost:8501/) after spinning up containers**
 
 Note: 
 1. Langsmith supports observability and dashboard which has wide range of metrics. Hence, used langsmith dashboard instead of Grafana(https://smith.langchain.com/).
@@ -112,6 +113,11 @@ export LANGCHAIN_API_KEY="your_langsmith_api_key_here"
 
 ## 🛠️ Docker Setup (Recommended)
 ```sh
+# Build and start all services
+# Both backend and frontend now mount the project root (.:/app) for consistent imports and shared access
+# The backend uses 'uvicorn backend.api.main:app ...' as its entrypoint
+# The backend Dockerfile no longer contains a CMD, as commands are set in docker-compose.yml
+# If you use Hugging Face models extensively, consider using a pre-built image (see Docker Hub: huggingface/transformers-pytorch-cpu)
 docker compose build
 docker compose up
 ```
@@ -134,11 +140,14 @@ docker compose up
   cd backend/api
   uvicorn main:app --reload --host 0.0.0.0 --port 8000
   ```
+  (If running in Docker, the command is now 'uvicorn backend.api.main:app ...')
 - Start frontend:
   ```sh
   cd ../../frontend
   streamlit run app.py
   ```
+  (If running in Docker, the command is now 'streamlit run frontend/app.py ...')
+
 ---
 
 ## 🧑‍💻 Usage
@@ -199,20 +208,28 @@ Terradata_Assignment/
     api/           # FastAPI app
     core/          # Orchestrator, agents, state, vectorstore
     tools/         # RAG, embedding, extraction, web search tools
-  frontend/        # Streamlit app
+    Dockerfile     # Backend Dockerfile (builds backend service image)
+  frontend/
+    app.py         # Streamlit app
+    Dockerfile     # Frontend Dockerfile (builds frontend service image)
   input/           # Input documents
   output/          # Processed outputs
   vector_db/       # Chroma vectorstore data
   hf_cache/        # HuggingFace model cache
   scripts/         # Logging and utility scripts
   logs/            # Log files
-  requirements.txt
-  Dockerfile
-  docker-compose.yml
+  requirements.txt # Top-level requirements (if any shared)
+  docker-compose.yml # Orchestrates both backend and frontend services
   .gitignore
   .dockerignore
   README.md
 ```
+
+### 🐳 Dockerfiles & Scalability
+- **backend/Dockerfile**: Builds the backend (FastAPI) service image. Handles all backend dependencies and code.
+- **frontend/Dockerfile**: Builds the frontend (Streamlit) service image. Handles all frontend dependencies and code.
+- This separation allows you to scale, update, or deploy backend and frontend services independently, and is a best practice for production-ready, scalable systems.
+- The `docker-compose.yml` file orchestrates both services, enabling easy multi-container management and networking.
 
 ---
 
