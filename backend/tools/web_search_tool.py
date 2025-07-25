@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 # Add the project root to sys.path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
 import asyncio
 from scripts.log_config import get_logger
@@ -11,7 +11,7 @@ logger = get_logger(__name__)
 
 # Import ddgs (new DuckDuckGo search package)
 from ddgs import DDGS
-
+    
 async def web_search_tool(*args, **kwargs):
     logger.info("---Entering web_search_tool---")
     """

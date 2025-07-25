@@ -1,14 +1,14 @@
 import sys
 from pathlib import Path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
+
 from fastapi import FastAPI
-from api.router import router as chat_router
+from backend.api.router import router as chat_router
 from scripts.log_config import setup_logging, get_logger
 
-setup_logging(task_type="api")
+setup_logging(log_type="Chat-Bakend")
 
-
-logger = get_logger("API")
+logger = get_logger("Chat-Backend")
 
 app = FastAPI(title="Terradata Assignment API", version="1.0.0", description="FastAPI backend for SavvyThreads")
 logger.info("Starting Terradata Assignment API...")

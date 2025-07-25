@@ -1,3 +1,9 @@
+import sys
+from pathlib import Path
+
+# Add the project root to sys.path
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 import time
 import os
 import joblib
@@ -5,7 +11,15 @@ import streamlit as st
 import requests
 from dotenv import load_dotenv
 from pathlib import Path
+import logging
 
+from scripts.log_config import setup_logging, get_logger
+
+# --- Setup logger ---
+setup_logging(log_type="Chat-Frontend")
+
+logger = get_logger("Chat-Frontend")
+logger.info("Streamlit frontend app started.")
 # --- ChatGPT-like CSS with improved layout ---
 CHATGPT_DARK_CSS = """
 <style>
@@ -146,7 +160,8 @@ header {visibility: hidden;}
 
 # --- Ensure data directory exists ---
 # Set project root
-PROJECT_ROOT = Path(__file__).parent.parent.resolve()
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
 DATA_DIR = PROJECT_ROOT / 'frontend' / 'data'
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -181,6 +196,7 @@ with st.sidebar:
         st.session_state.chat_title = f'ChatSession-{new_chat_id}'
         st.session_state.messages = []
         st.session_state.reasoning = []
+        logger.info(f"Started new chat session: {new_chat_id}")
     
     # Display past chats with compact styling
     for chat_id, chat_title in past_chats.items():
@@ -189,6 +205,7 @@ with st.sidebar:
         if st.button(display_title, key=f"chat_{chat_id}"):
             st.session_state.chat_id = chat_id
             st.session_state.chat_title = chat_title
+            logger.info(f"Loaded past chat session: {chat_id} - {chat_title}")
     
     if 'chat_id' not in st.session_state:
         st.session_state.chat_id = f'{time.time()}'
@@ -228,6 +245,7 @@ st.markdown('<div class="fixed-chat-area" id="chat-area">', unsafe_allow_html=Tr
 message_container = st.container()
 with message_container:
     for idx, message in enumerate(st.session_state.messages):
+        # Remove debug print for reasoning alignment
         if message['role'] == 'user':
             st.markdown(f'<div class="user-bubble">{message["content"]}</div>', unsafe_allow_html=True)
         else:
@@ -238,9 +256,10 @@ with message_container:
                     for step in st.session_state.reasoning[idx]:
                         if step.get("type") == "reasoning":
                             st.write(f"**Step:** {step.get('step','')}")
-                            for k, v in step.items():
-                                if k not in ("type", "step") and v is not None:
-                                    st.write(f"- **{k.replace('_',' ').capitalize()}**: {v}")
+                            if "status" in step and step["status"] is not None:
+                                st.write(f"- **Status:** {step['status']}")
+                            if "response" in step and step["response"] is not None:
+                                st.write(f"- **Response:** {step['response']}")
                         elif step.get("type") == "error":
                             st.error(step.get("error"))
     
@@ -276,18 +295,65 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # --- Chat input at the bottom ---
+# Ensure clear_input flag exists
+if 'clear_input' not in st.session_state:
+    st.session_state.clear_input = False
+
+# --- Process pending user message before rendering UI ---
+if st.session_state.get('should_send', False):
+    prompt = st.session_state.get('input_to_send', '')
+    if prompt.strip():
+        if st.session_state.chat_id not in past_chats:
+            past_chats[st.session_state.chat_id] = st.session_state.chat_title
+            joblib.dump(past_chats, str(DATA_DIR / 'past_chats_list'))
+            logger.info(f"Saved new chat session: {st.session_state.chat_id}")
+        st.session_state.messages.append({'role': 'user', 'content': prompt})
+        logger.info(f"User sent message: {prompt}")
+        # Always append an empty list for user messages to keep reasoning in sync
+        st.session_state.reasoning.append([])
+        st.session_state.is_streaming = True
+        st.session_state.current_response = ""
+        st.session_state.current_reasoning = []
+    st.session_state.should_send = False
+    st.session_state.input_to_send = ''
+    st.session_state.clear_input = True
+
+# Chat input with improved styling
+col1, col2 = st.columns([10, 1])
+with col1:
+    user_input = st.text_input(
+        'Type your message...',
+        key='input',
+        value='' if st.session_state.get('clear_input', False) else st.session_state.get('input', ''),
+        label_visibility="collapsed"
+    )
+with col2:
+    send_clicked = st.button("Send")
+
+if send_clicked and user_input.strip():
+    st.session_state.should_send = True
+    st.session_state.input_to_send = user_input
+    st.rerun()
+
+# After rerun, reset the flag
+if st.session_state.get('clear_input', False):
+    st.session_state.clear_input = False
+
 def send_message():
     prompt = st.session_state.get('input', '')
     if not prompt.strip():
+        logger.warning("Attempted to send empty message. Ignored.")
         return
         
     # Save this as a chat for later
     if st.session_state.chat_id not in past_chats:
         past_chats[st.session_state.chat_id] = st.session_state.chat_title
         joblib.dump(past_chats, str(DATA_DIR / 'past_chats_list'))
+        logger.info(f"Saved new chat session: {st.session_state.chat_id}")
     
     # Add user message immediately
     st.session_state.messages.append({'role': 'user', 'content': prompt})
+    logger.info(f"User sent message: {prompt}")
     
     # Initialize streaming state
     st.session_state.is_streaming = True
@@ -297,7 +363,7 @@ def send_message():
     # Clear input immediately
     st.session_state['input'] = ''
     
-    # Force rerun to show user message immediately
+    # Force rerun to show user message immediately and start streaming
     st.rerun()
 
 def process_streaming_response():
@@ -313,6 +379,7 @@ def process_streaming_response():
             break
     
     if not last_user_message:
+        logger.warning("No user message found for streaming response.")
         st.session_state.is_streaming = False
         return
     
@@ -320,6 +387,7 @@ def process_streaming_response():
     full_response = ''
     
     try:
+        logger.info(f"Sending message to backend API: {last_user_message}")
         with requests.post(API_URL, json={"user_id": "user", "message": last_user_message}, stream=True, timeout=60) as resp:
             if resp.status_code == 200:
                 for line in resp.iter_lines():
@@ -329,28 +397,35 @@ def process_streaming_response():
                         chunk = line.decode("utf-8")
                         import json
                         chunk = json.loads(chunk)
-                    except Exception:
+                    except Exception as e:
+                        logger.warning(f"Failed to decode or parse chunk: {e}")
                         continue
                         
                     if chunk.get("type") == "reasoning":
                         reasoning_steps.append(chunk)
                         st.session_state.current_reasoning = reasoning_steps
-                        
+                        logger.info(f"Received reasoning step: {chunk}")
+                    
                     elif chunk.get("type") == "final":
                         full_response = chunk.get("response", "(No response)")
                         st.session_state.current_response = full_response
+                        logger.info(f"Received final response from backend.")
                         break
             else:
                 full_response = f"Error: {resp.text}"
                 st.session_state.current_response = full_response
+                logger.error(f"Backend API error: {resp.status_code} - {resp.text}")
                 
     except Exception as e:
         full_response = f"Error: {str(e)}"
         st.session_state.current_response = full_response
+        logger.error(f"Exception during backend API call: {e}")
     
     # Finalize the response
+    logger.info(f"reasoning: {reasoning_steps}")
     st.session_state.messages.append({'role': 'ai', 'content': full_response})
     st.session_state.reasoning.append(reasoning_steps)
+    logger.info(f"Appended AI response to chat history.")
     
     # Reset streaming state
     st.session_state.is_streaming = False
@@ -360,15 +435,11 @@ def process_streaming_response():
     # Save to file
     joblib.dump(st.session_state.messages, str(DATA_DIR / f'{st.session_state.chat_id}-st_messages'))
     joblib.dump(st.session_state.reasoning, str(DATA_DIR / f'{st.session_state.chat_id}-reasoning'))
-    
-    # Final rerun to show completed state
+    logger.info(f"Saved chat and reasoning for session: {st.session_state.chat_id}")
     st.rerun()
 
-# Process streaming if active
+# Add debug logging before streaming check
+logger.info(f"Streaming state: {st.session_state.is_streaming}, Current response: {st.session_state.current_response}")
 if st.session_state.is_streaming and st.session_state.current_response == "":
+    logger.info("Calling process_streaming_response()")
     process_streaming_response()
-
-# Chat input with improved styling
-col1, col2 = st.columns([10, 1])
-with col1:
-    st.text_input('Type your message...', key='input', on_change=send_message, label_visibility="collapsed")

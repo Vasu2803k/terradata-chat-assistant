@@ -9,9 +9,8 @@ LOG_DIR = PROJECT_ROOT / "logs"
 
 
 def setup_logging(
-    session_id: str = datetime.now().strftime('%Y%m%d_%H%M%S'),
-    user_id: str = "default",
-    task_type: str = "Chat"
+    log_type:str ="Chat-Frontend",
+    session_id: str = datetime.now().strftime('%Y%m%d_%H%M%S')
     ) -> None:
     """
     Configures logging to output to console and a unique file per session.
@@ -19,11 +18,11 @@ def setup_logging(
     # Create logs directory if it doesn't exist
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     # Include task type in log directory path
-    log_path = LOG_DIR / task_type
+    log_path = LOG_DIR / log_type
     log_path.mkdir(parents=True, exist_ok=True)
 
     # Create log filename
-    log_filename = log_path / f"{user_id}_{session_id}_{task_type}.log"
+    log_filename = log_path / f"{session_id}.log"
 
     # Define log format
     log_formatter = logging.Formatter(

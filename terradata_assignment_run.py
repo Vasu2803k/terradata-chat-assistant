@@ -4,6 +4,11 @@ import os
 import time
 from pathlib import Path
 
+# Ensure script always runs from project root
+PROJECT_ROOT = Path(__file__).parent.resolve()
+if Path.cwd() != PROJECT_ROOT:
+    os.chdir(PROJECT_ROOT)
+
 # Helper to run a command in the background
 
 def run_background(cmd, cwd=None):
@@ -16,14 +21,11 @@ def run_background(cmd, cwd=None):
 if __name__ == "__main__":
     print("Launching Terradata Assignment servers...\n")
 
-    # Set project root
-    PROJECT_ROOT = Path(__file__).parent.resolve()
-
     # Start FastAPI backend
     print("[1/2] Starting FastAPI backend at http://localhost:8000 ...")
     backend_proc = run_background([
-        sys.executable, '-m', 'uvicorn', 'main:app', '--reload', '--host', '0.0.0.0', '--port', '8000'
-    ], cwd=str(PROJECT_ROOT / 'backend' / 'api'))
+        sys.executable, '-m', 'uvicorn', 'backend.api.main:app', '--reload', '--host', '0.0.0.0', '--port', '8000'
+    ], cwd=str(PROJECT_ROOT))
 
     # Wait a bit to ensure backend starts first
     time.sleep(2)

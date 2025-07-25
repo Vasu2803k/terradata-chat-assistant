@@ -5,7 +5,7 @@ from langchain_chroma import Chroma
 from pathlib import Path
 
 # Set project root
-PROJECT_ROOT = Path(__file__).parent.parent.resolve()
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 # Initialize embeddings only once
 embeddings = HuggingFaceEmbeddings(

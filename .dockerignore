@@ -24,5 +24,14 @@ Thumbs.db
 
 # Other
 *.pdf
-*.sqlite3 
-.git
+*.sqlite3
+
+# Git
+.git/
+.gitignore
+
+# OS/Editor files
+*.swp
+*.swo
+*.bak
+*.tmp

@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 # Add the project root to sys.path
-sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent.parent))
 
 import os
 from datetime import datetime
@@ -70,10 +70,11 @@ async def planning_agent(state: AgentState) -> AgentState:
             streaming=True,
             api_key=groq_api_key
         )
-        agent_registry_str = "\n".join([
-            f"- {agent['name']}: {agent['description']} (tools: {', '.join([f'{tool['tool']} (args: {tool['args']})' for tool in agent['tools']])})"
-            for agent in agent_registry
-        ])
+        agent_registry_str_lines = []
+        for agent in agent_registry:
+            tools_str = ', '.join([f"{tool['tool']} (args: {tool['args']})" for tool in agent['tools']])
+            agent_registry_str_lines.append(f"- {agent['name']}: {agent['description']} (tools: {tools_str})")
+        agent_registry_str = "\n".join(agent_registry_str_lines)
 
         
         # Inline the system message directly instead of using {prompt_template} as a variable

@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 
 # Add the project root to sys.path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
 import os
 import asyncio
@@ -18,7 +18,7 @@ from scripts.log_config import setup_logging, get_logger
 logger = get_logger(__name__)
 
 # Set project root
-PROJECT_ROOT = Path(__file__).parent.parent.resolve()
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 def is_model_cached(model_name, cache_folder):
     logger.info("---Entering is_model_cached---")

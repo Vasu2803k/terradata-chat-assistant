@@ -2,7 +2,8 @@ import sys
 from pathlib import Path
 
 # Add the project root to sys.path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
+
 
 import os
 import asyncio
@@ -14,7 +15,7 @@ from scripts.log_config import get_logger
 logger = get_logger(__name__)
 
 # Set project root
-PROJECT_ROOT = Path(__file__).parent.parent.resolve()
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
 
 class TextExtraction:
     def __init__(self, pdf_root_dir, output_dir):

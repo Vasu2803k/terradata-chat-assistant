@@ -6,12 +6,12 @@ import sys
 from pathlib import Path
 
 # Add the project root to sys.path
-sys.path.append(str(Path(__file__).resolve().parent.parent))
+sys.path.append(str(Path(__file__).resolve().parent.parent.parent))
 
 from fastapi import APIRouter, HTTPException, status
 from fastapi.responses import StreamingResponse
 import json
-from api.models import UserRequest, ChatResponse
+from backend.api.models import UserRequest, ChatResponse
 from scripts.log_config import get_logger
 from backend.core.orchestrator import process_message
 
