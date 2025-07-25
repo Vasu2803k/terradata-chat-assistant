@@ -25,3 +25,4 @@ Thumbs.db
 # Other
 *.pdf
 *.sqlite3 
+.git

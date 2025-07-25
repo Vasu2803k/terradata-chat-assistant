@@ -7,6 +7,7 @@ Supports document ingestion, retrieval, summarization, and reasoning over resear
 Note: 
 1. Langsmith supports observability and dashboard which has wide range of metrics. Hence, used langsmith dashboard instead of Grafana(https://smith.langchain.com/).
 2. Advanced logging is also enabled across the system 
+3. Ensure docker desktop is running in the background to build docker image
 ---
 
 ## **Core Architecture**

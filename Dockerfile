@@ -1,17 +1,18 @@
 # Use official Python image
-FROM python:3.10-slim
+FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y build-essential && rm -rf /var/lib/apt/lists/*
-
-# Install Python dependencies
+# Install system dependencies and Python dependencies in one layer for better caching
 COPY requirements.txt ./
-RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
+RUN apt-get update \
+    && apt-get install -y build-essential \
+    && pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy the rest of the code
+# Copy the rest of the code (after dependencies for better cache usage)
 COPY . .
 
 # Expose backend and frontend ports
