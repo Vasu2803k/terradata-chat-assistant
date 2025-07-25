@@ -1,0 +1,569 @@
+
+Unveiling the Dynamic: The Non-Neutrality Proposition of Money
+Master Thesis Project
+by
+Turre Sai Girish
+19HS20045
+Under the supervision of
+Prof. Siddhartha Chattopadhyay
+Department of Humanities and Social Sciences
+Indian Institute of Technology Kharagpur
+Department of Humanities and Social Sciences
+April 30, 2024
+
+DECLARATION
+I certify that
+a. The work contained in this report has been done by me under the guidance of my supervisor.
+b. The work has not been submitted to any other Institute for any degree or diploma.
+c. I have conformed to the norms and guidelines given in the Ethical Code of Conduct of the
+Institute.
+d. Whenever I have used materials (data, theoretical analysis, figures, and text) from other
+sources, I have given due credit to them by citing them in the text of the thesis and giving their
+details in the references. Further, I have taken permission from the copyright owners of the
+sources, whenever necessary.
+Date: April 30, 2024 Turre Sai Girish
+Place: IIT Kharagpur 19HS20045
+
+Department of Humanities and Social Sciences
+Indian Institute of Technology, Kharagpur - 721302
+CERTIFICATE
+This is to certify that we have examined the report entitled Unveiling the Dynamic: The
+Non-Neutrality Proposition of Money, submitted by Turre Sai Girish (19HS20045) to the
+Department of Humanities and Social Sciences, IIT Kharagpur in partial fulfillment for the award
+of the degree of Integrated Master of Science in Economics. We hereby accord our approval of it as a
+study carried out and presented in a manner required for its acceptance in partial fulfillment of the
+masters degree for which it has been submitted. The thesis has fulfilled all the requirements as per the
+regulations of the Institute and has reached the standard needed for submission.
+Guide’s Signature
+Date: April 30, 2024
+Guide: Prof. Siddhartha Chattopadhyay
+Department of Humanities and Social Sciences
+Indian Institute of Technology, Kharagpur
+
+Acknowledgements
+I would like to acknowledge and give special thanks to my supervisor Prof.Siddhartha Chattopadhyay,
+Department of Humanities and Social Sciences, IIT Kharagpur for his keen interest, guidance and
+support. I sincerely thank him for his insightful and critical suggestions and his immense help during
+the study. I also thank all the professors of the Department of Humanities and Social Sciences for their
+valuable suggestions and motivation to complete my course. Their immense knowledge and valuable
+advice carried me through all the stages of my Master Thesis project work, which wouldn’t have been
+possible without their supervision. I would also like to give my warmest thanks to my friends at IIT
+Kharagpur for their constant support and motivation throughout my work.
+
+Table of Contents
+DECLARATION.....................................................................................................................................2
+CERTIFICATE........................................................................................................................................3
+Acknowledgements..............................................................................................................................4
+Table of Contents.....................................................................................................................................5
+Chapter 1..................................................................................................................................................6
+Introduction.........................................................................................................................................6
+Chapter 2................................................................................................................................................7
+Objective of the Study.........................................................................................................................7
+Chapter 3..................................................................................................................................................8
+Literature Review................................................................................................................................8
+3.1 Research Gap...........................................................................................................................8
+3.2 Theoretical and Empirical Literature......................................................................................9
+Chapter 4................................................................................................................................................13
+Methodology and Source of Data......................................................................................................13
+4.1 Analytical Framework and Model.........................................................................................13
+4.2 Data.....................................................................................................................................14
+4.3 Possible Outcome...............................................................................................................18
+Chapter 5..............................................................................................................................................20
+Findings and Implications................................................................................................................20
+5.1 Findings and Discussions....................................................................................................20
+5.2 Conclusion...........................................................................................................................23
+5.3 Implications.........................................................................................................................23
+Chapter 6..............................................................................................................................................25
+Summary.........................................................................................................................................25
+6.1 Context and objective of study............................................................................................25
+6.2 Major Findings.....................................................................................................................25
+6.3 Conclusion...........................................................................................................................26
+6.4 Policy Implication of the findings.........................................................................................26
+6.5 Contribution of the study.....................................................................................................27
+6.6 Limitations of the study........................................................................................................27
+6.7 Scope for future research....................................................................................................28
+7. References.......................................................................................................................................29
+
+Chapter 1
+Introduction
+Permanent changes in the money supply have no long-term effects on real variables, according to
+mainstream classical economics. Therefore, real output, unemployment rates, and real prices will not
+be impacted by an independent increase in the money supply; consequently, real income and the real
+price of goods will not change. Instead, all prices and wages will rise proportionately.
+The degree of employment is mostly determined by long-term real factors such as population growth,
+technology, economic agents' preferences, and specific elements of the institutional framework of the
+economic system (such as property rights, taxation, and welfare policy). As a result, we can conclude
+that although central banks have the authority to control the money supply and make market
+interventions when needed. They are unable to eventually affect the real economy by printing more or
+less money. A shift in the money supply will probably affect variables right away because of price
+stickiness and insufficient flow of market information.Furthermore, even in the short term, real
+economic activity remains unaffected by a perfectly anticipated monetary policy, according to certain
+neoclassical economists. Ekomie (2013). Thus, it is essential to comprehend how the idea of monetary
+neutrality can assess the efficacy of monetary policies in any nation's economy.
+Monetary neutrality, a fundamental concept in classical economics, asserts that changes in the money
+supply only affect nominal variables—like wages and prices—over the long run, leaving real
+variables—like output and employment—unaffected. This theory states that adjustments to the money
+supply will only result in commensurate adjustments to prices and wages; it will not impact the
+economy's total production potential.
+In order to assess monetary policies' efficacy in the context of monetary neutrality, economists closely
+examine the ways in which shifts in the money supply impact different economic variables over
+varying time spans. Short-term changes in the money supply can have a transient impact on actual
+economic activity because of things like imperfect market information transmission and price
+stickiness. For example, an unexpected rise in the money supply could initially encourage investment
+and spending, resulting in a brief increase in output and employment.
+
+Chapter 2
+Objective of the Study
+High inflation reduces the purchasing power of money and creates uncertainty in the economy, which
+has a negative impact on the standard of living as well as the macro economy as a whole. As a result,
+the majority of central banks worldwide now consider attaining price stability—generally understood
+to mean low and stable inflation—to be the main goal of monetary policy. Therefore, it is crucial to
+comprehend how much inflationary pressure is produced when the money supply is used as a tool for
+policy. As a result, the study's goal can be split into these three sections:
+1. To research the extent of money neutrality in India and the best ways for policymakers to
+employ it to maintain price stability.
+2. To determine the effects of any changes in the money supply, both direct and indirect, on
+actual factors including unemployment, investment, and inflation.
+3. To comprehend the drawbacks of ideas such as the quantity theory of money and how to get
+around them.
+
+Chapter 3
+Literature Review
+3.1 Research Gap
+The majority of the research in this field uses US data, and there appears to be a bias in the discussion
+in favor of the US. Even though theoretical research and data are available, other nations, like the G20
+countries, perceive a deficiency in the empirical research conducted in this area. One observes that,
+even in the absence of multivariate systems, real output has received the majority of attention in the
+survey, while the long-term bivariate relationship between money or inflation and other significant
+real variables has received less attention. Just conducting a more thorough investigation of the
+long-term bivariate relationships for variables other than real output would accomplish a great deal
+more. Another problem is that, in evaluating neutrality propositions, every analysis surveyed looks at
+a single nation at a time. It would be interesting to find out if a panel approach were used for a
+collection of comparable nations, such as the G7, and if the results would match those reported in the
+studies or if significant interactions between the nations are being overlooked. Examine multivariate
+systems for a single nation that incorporate an international variable in an effort to account for
+cross-border effects. Additionally, a statistical mean of an economy's pricesserves as the general price
+level in empirical models. As a result, evaluating shifts in the relative price structure, if they occur,
+and their implications for resource allocation are challenging. Furthermore, when testing neutrality
+propositions, the traditional method of examining one nation at a time may miss important economic
+interactions. The application of a panel approach could yield valuable insights into the generalizability
+of findings from single-country studies, as well as whether important cross-border interactions are
+being overlooked.
+
+3.2 Theoretical and Empirical Literature
+Theoretical Literature: Many studies have been conducted to support the classical view, which holds
+that money is not neutral over the short or long term. It begins with criticisms of the classical view
+and then uses empirical techniques to demonstrate how changes in the amount of money in circulation
+within an economy affect output, unemployment, relative prices, and other real variables. (Oliver,
+1997).
+Table 1: The causes of non-neutrality that the classicals identified are listed in the table below.
+Source Causes money to affect Described by:
+real activity through:
+Sticky prices Real expenditure Hume
+Sticky nominal wages Real wages Thorton, torrens
+Fixed nominal costs Real cost burdens Attwood, McCulloch
+Fixed nominal income of Distributive shares and Bentham, Thornton,
+certain groups capital formation Malthus, Ricardo,
+McCulloch
+Sticky nominal interest Real interest rates Torrens
+rates
+Fixed inventory-to-sales Inventory investments Thornton
+ratios
+General price-relative Misperceived price signals J.S. Mill
+price confusion
+State of business Changes in confidence Attwood, McCulloch,
+confidence Torrens
+Market size limitation to labor productivity Attwood, Malthus, Torrens
+division of labor
+Efforts to maintain real Labor-force participation Torrens
+income rate
+TABLE: [['Source', 'Causes money to affect\nreal activity through:', 'Described by:'], ['Sticky prices', 'Real expenditure', 'Hume'], ['Sticky nominal wages', 'Real wages', 'Thorton, torrens'], ['Fixed nominal costs', 'Real cost burdens', 'Attwood, McCulloch'], ['Fixed nominal income of\ncertain groups', 'Distributive shares and\ncapital formation', 'Bentham, Thornton,\nMalthus, Ricardo,\nMcCulloch'], ['Sticky nominal interest\nrates', 'Real interest rates', 'Torrens'], ['Fixed inventory-to-sales\nratios', 'Inventory investments', 'Thornton'], ['General price-relative\nprice confusion', 'Misperceived price signals', 'J.S. Mill'], ['State of business\nconfidence', 'Changes in confidence', 'Attwood, McCulloch,\nTorrens'], ['Market size limitation to\ndivision of labor', 'labor productivity', 'Attwood, Malthus, Torrens'], ['Efforts to maintain real\nincome', 'Labor-force participation\nrate', 'Torrens']]
+
+
+Before completely impacting prices, sticky prices from changes in money stock can have an impact
+on output. Real wages and real prices fluctuate as a result of lags in nominal wages, which modify the
+incentives for employment and output. Furthermore, they linked the fixity of some nominal
+contractual costs—whose real burden increased or decreased in response to inflation or deflation—to
+the non-neutrality of money. Real rates changed as a result of the nominal interest rate lag behind
+inflation, which had an impact on real activity, capital investment, and business
+borrowing.Non-neutrality was also found to be caused by desired fixed inventory-to-sales ratios,
+which increased production for inventory in response to money-induced increases in sales. The
+classicals also connected non-neutrality to an incorrect belief that output is required in response to
+monetary shocks because of a mix-up between changes in relative and general prices.
+Additionally, according to the classicals, money affects business confidence, which in turn affects
+output. They also discussed how money-induced increases in aggregate demand boost productivity
+and encourage specialization and the division of labor by growing the market for goods. Some
+classical scholars even contended that the output effects of money result from the increased work
+required to maintain a constant real income in the face of inflation.
+According to the quantity theory of money, when there is a real shock to relative prices, other prices
+adjust to compensate, but absolute prices stay at the same level. The money supply, money velocity,
+and volume of goods transactions are the causes of this. The authors of [Marinko et al. 2016] do not
+support these theories and offer proof that the additional funds generated by commercial banks or the
+central bank are initially applied to specific products and services. When compared to other products,
+these products become more in demand, which drives up their prices. As more money enters the
+economy, there will be a greater demand for other goods, which will drive up prices. Wealth and
+income are redistributed in favor of those who received the new currency early in the process, at the
+expense of those who received it later. As such, there are two types of relative price changes. The first
+is the redistribution of income from late to early recipients of the new money that occurs during the
+inflationary process.The second is the continuous, irreversible changes in wealth and income that
+occur even after the money has been distributed across the economy. This gradual redistribution of
+wealth and income shows how money is ultimately non-neutral. Quarterly time-series data covering
+the US economy from 1959 to 2013 are used in this analysis.
+
+In his paper [7], James Bullard examines more recent methods in the literature to verify the money's
+neutrality. The paper addresses the following question: "What would happen if the money stock, for
+example, was $5 billion one day and had been $5 billion for a long time? How would it change
+suddenly to $6 billion and stay there for a long time?"This experiment is a one-of-a-kind long-term,
+unforeseen shift in the money stock's level. He also discusses the concept of super-neutrality of
+money, which essentially states that if the government initially keeps the money stock growing at a
+particular rate for an extended length of time and at some date, that growth rate is abruptly changed to
+a different rate. This paper concludes an extensive survey regarding the long-term and super-neutrality
+of money for the industrialized economy. It also notes that all of the analyses in the survey examine
+one country at a time when testing neutrality propositions. Additional research can be conducted to
+determine whether a panel approach, applied to a group of comparable nations such as the G7, would
+yield outcomes similar to those documented in the surveyed studies or if significant interactions
+among the nations are being overlooked.
+There are a few studies on the neutrality of money that consider the interaction of variable 1 in
+particular nations, such as [8, 9, 10]. The majority of economists seem to concur these days that
+monetary policy affects real variables in some way, even though the precise mechanism underlying
+this relationship is up for discussion. Several convincing explanations have been proposed in recent
+years.Regarding the subject of money's non-neutrality, more investigation will be required before any
+conclusions are drawn.
+
+Empirical Literature: One of the core ideas of QTM is the contrast between relative and absolute
+prices. This paradox has to do with the idea that although changes in relative prices are caused by
+changes in real variables, changes in absolute prices are attributed to monetary factors. Put another
+way, given the quantity, velocity, and volume of goods exchanged, changes brought about by a real
+shock to relative prices result in compensating adjustments in other prices, which keep the level of
+absolute prices unchanged. The authors of [Kuek et al. 2016] also conclude that independent changes
+in the money supply had an effect on real output levels over time, regardless of the monetary
+aggregate we choose to include in the analysis. It implies that the shift in the money supply cannot be
+explained solely by monetary factors, and as a result, the countries under observation have the
+monetary policy contingency to control actual economic activity. The empirical study is based on
+panel cointegration analysis, which makes use of real output annual data and broad (M2) and narrow
+(MI) monetary aggregates for 11 former socialist EU countries from 1995 to 2013.
+The authors of [Marinko et al. 2016] discovered empirical evidence that money is not neutral in the
+non-traditional sense. This is because during a transitional period—which lasts until the price level
+fully adjusts in a new steady-state equilibrium—changes in the money supply disturb relative prices
+and, consequently, the distribution of resources within the economy.
+
+Chapter 4
+Methodology and Source of Data
+4.1 Analytical Framework and Model
+According to empirical data, money is not neutral in the non-traditional sense since shifts in the
+money supply have an impact on relative prices, which then have an impact on the distribution of
+resources within the economy. Two regression systems are built by us. In the first, changes in the
+money supply are linked to changes in relative prices; in the second, changes in the money supply and
+relative prices are influenced by the rate of inflation in addition to certain real factors.
+We estimate the first equation as:
+Δ(Pi/ Pj ) = β 0 + i ∑n α i Δ(Pi/ Pj)t-I + β 1 ΔMt + β 2 ΔYt + vt -----------------------(1)
+where (Pi/Pj)t indicates the change in relative prices, Mt is the change in the money supply, Yt is the
+change in the real GDP, and n is the number of lags of the dependent variable.
+The fundamental idea behind this equation is that variations in the quantity of money in circulation
+and variations in real output—the real sector of the economy that is represented in Eq. (1)—cause
+variations in relative prices. A shift in these factors leads to a shift in the money supply, which affects
+relative prices that are determined by other factors like the interest rate.
+The second equation of the system is:
+Vt = δ 0 + i ∑nγ iVt-I + δ 1 Δ(Pi/Pj)t + δ 2 ΔMt + ut ----------------------- (2)
+
+In this instance, the natural rate of unemployment (U), the variation of real investment (I), and the
+inflation rate (n) are the variables that are used to represent the dependent variable V. We evaluate the
+indirect effects of the money supply change on the real variables and the inflation rate through relative
+prices, to the extent necessary to fit this rate. This time, the money rate determines the money supply.
+However, the target of the funds rate can be any of the dependent variables in Eq (2). In a later
+section, we will discuss the appropriated econometric methodology we employ to address
+endogeneity.
+The system composed of Eqs. (1) and (2) is subject to several endogeneity sources. The variable M I,
+or the change in the money supply, is determined endogenously by at least three factors. Changes in
+the quantity of money in circulation first affect the relative price, but it can also affect how the
+monetary authority targets monetary aggregates. Second, we use M2 to represent the money supply
+even though there are other metrics. It is impossible to ascertain, nevertheless, which monetary
+aggregates the Fed is genuinely attempting to control. It could therefore be considered a typical
+example of variable error.Finally, when the funds-rate is the target of the operational regime, the
+amount of money is the variable that changes to the extent necessary to fit this rate. Here, the money
+supply is regulated by the funds rate. However, the federal funds rate can target any of the factors that
+are dependent on Eq (2). We describe the appropriate econometric strategy we employ to manage
+endogeneity in the section that follows.
+4.2 Data
+The 41 observations that make up the study's data set span the quarter-to-quarter period from March
+2011 to March 2021. The variables taken into account are: P /Pi: The relative price is determined by
+dividing the WPI by the CPI (Consumer Price Index).
+(Wholesale Price Index), the money supply M2, real GDP (RGDP), and the quarterly inflation rate
+(n), in that order. Real investment is expressed as the sum of all completed investments, and U stands
+for the quarterly unemployment rate.
+The evolution of these variables over time is depicted in figures 1 to 6.
+
+Figure 1: Relative price change as the Dependent variable, Mar 2011—Mar 2021
+Figure 2: Change in Money Supply (M2), Mar 2011—Mar 2021.
+
+Figure 3: Change in Real output given by Real GDP, Mar 2011—Mar 2021.
+Figure 4: Inflation rate, Mar 2011—Mar 2021
+
+Figure 5: Real Investment given by Projects value completed, Mar 2011—Mar 2021
+Figure 6: Unemployment Rate, Mar 2011—Mar 2021
+
+We chose the ratio of the Consumer Price Index to the Wholesale Price Index as our dependent
+variable in order to address the problem of average pricing.As previously noted in the research gap,
+the majority of studies employ statistical averages of prices, which makes it challenging to evaluate
+potential shifts in the relative price structure and the implications for allocating resources based on
+this idea.
+In addition, we use M2 as the money supply variable rather than Ml since it displays a wider range of
+currency exchange methods. Furthermore, we consider the value of finished projects in India when
+making real investments.
+The Ministry of Statistics, Program Implementation, and Press Information Bureau are the sources of
+the data. The Ministry of Statistics and Programme Implementation, the Central Statistics Office, and
+the Reserve Bank of India provide the data for the independent variables.
+4.3 Possible Outcome
+To find out if shifts in the money supply affect output and other real variables, I first studied the
+matter using the most basic version of the quantity theory of money.. The end outcome there
+demonstrated that money is not neutral. Here, too, we anticipate that the relative price and other real
+variables will be impacted by the shift in the money supply. We can see from the literature review that
+economists hold the view that money is not neutral. They argue that real variables are affected by
+changes in the money supply. Two primary conclusions are anticipated from our analysis.
+One is that changes in the money supply (M2) will impact the relative prices (CPI/WPI) in one of two
+ways: either positively or negatively, depending on how the money is supplied to the economy. Since
+it takes time for newly infused funds to reach consumers, we can generally assume that an increase in
+WP I will occur before a rise in CPI. In a similar vein, we anticipate that the lag variable reflecting the
+change in relative price will have a negative relationship with the dependent variable. This is because
+any significant change in relative price during any given period will have a negative effect on the
+subsequent or upcoming period.
+
+Observing the indirect effect of change in money supply on real variables, we expect large
+coefficients of change in relative prices in Eq. 2. There should be a positive correlation between
+changes in relative prices and the inflation rate since higher price fluctuations lead to higher inflation.
+Even though prices do not rise proportionately, investments should increase as the amount of money
+in the economy does. Since more money in the market should lead to businesses hiring more workers
+to meet the growing demand, the unemployment rate should be negatively correlated with changes in
+relative prices.
+When examining the outcomes of Equation 2, we must bear in mind that the ultimate impact of
+alterations in the money supply on the real variable will be conveyed via a blend of direct and indirect
+effects, resulting from modifications in the money supply and the relative price.
+
+Chapter 5
+Findings and Implications
+5.1 Findings and Discussions
+The econometric findings of the estimated model produced by Eqs. (1) and (2) are shown in this
+section. We used estimates derived from the generalized method of moments (GM M) for that. Table 2
+shows the regression based on Equation 1. At a 5% confidence level, the outcome demonstrates the
+significance of the model as a whole. When the lags are introduced, the findings demonstrate that the
+relative prices and the change in the money supply both exhibit negative signs for each of them.
+While the coefficient of change in real output is not significant at the level, the second lag variable
+and the change in the money supply are both statistically significant at the 10% confidence level. A
+10% confidence level indicates that the model as a whole is significant. The empirical results show
+that nominal variables, such as the percentage change in the money supply, affect relative prices in
+addition to real variables, such as the real GDP percentage change.
+Table 2: Results of Equation 1 where change in relative price due to shifts in the money supply and
+actual output is analyzed.
+Δ(Pi /Pj ) Coefficient P>|z|
+L1 -0.13 0.510
+L2 -0.35 0.007
+L3 -0.19 0.284
+-0.0007 0.006
+ΔMt
+0.0001 0.122
+ΔYt
+Constant 0.013 0.010
+TABLE: [['Δ(Pi /Pj )', 'Coefficient', 'P>|z|'], ['L1', '-0.13', '0.510'], ['L2', '-0.35', '0.007'], ['L3', '-0.19', '0.284'], ['ΔMt', '-0.0007', '0.006'], ['ΔYt', '0.0001', '0.122'], ['Constant', '0.013', '0.010']]
+
+
+This section displays the econometric results of the estimated model, which is defined by Equations
+(1) and (2). We estimated that using the generalized method of moments (GMM). Table 2 shows the
+regression based on Equation 1. The outcome demonstrates that the entire model is noteworthy with a
+5% degree of confidence. When the lags are introduced, the findings demonstrate that the relative
+prices and the change in the money supply both exhibit negative signs for each of them. While the
+coefficient of change in real output is not significant at the level, the second lag variable and the
+change in the money supply are both statistically significant at the 10% confidence level. A 10%
+confidence level indicates that the model as a whole is significant. The empirical results show that
+nominal variables, such as the percentage change in the money supply, affect relative prices in
+addition to real variables, such as the real GDP percentage change.
+Table 3: Results of equation 2 (1), which measures the impact of relative price changes and changes in
+the money supply on the inflation rate.
+Π Coefficient P > |z|
+L1 0.75 0.000
+L2 0.13 0.401
+-7.85 0.424
+Δ(Pi/ Pj)
+0.004 0.661
+ΔMt
+Constant 0.65 0.216
+The inflation rate changes first when we examine the second equation. Even at the 1% confidence
+level, the model is significant with an R-square of 77%. The first dependent variable has a positive
+coefficient, indicating its significance. Nonetheless, the coefficients of the change in the money
+supply and relative prices are not significant at a 10% confidence level.
+TABLE: [['Π', 'Coefficient', 'P > |z|'], ['L1', '0.75', '0.000'], ['L2', '0.13', '0.401'], ['Δ(Pi/ Pj)', '-7.85', '0.424'], ['ΔMt', '0.004', '0.661'], ['Constant', '0.65', '0.216']]
+
+
+Table 4: Results of equation 2 (2) where effect of change in money supply and relative price on Real
+investment is measured.
+I Coefficient P > |z|
+L1 0.02 0.891
+L2 -0.02 0.891
+-334.85 0.425
+Δ(Pi/ Pj)
+1.07 0.005
+ΔMt
+Constant 113.20 0.000
+At a 5% confidence level, the model is significant in relation to actual investment. At a confidence
+level of even 10%, the lag variables show no statistically significant differences.On the other hand, the
+relative price shows a negative but statistically insignificant change in coefficient of change, while the
+money supply shows a positive and significant change even at the 1% confidence level.
+Table 5: Results of equation 2 (3) where effect of change in money supply and relative
+price on Natural Unemployment Rate is measured.
+U Coefficient P > |z|
+L1 0.475 0.070
+L2 0.406 0.331
+-2.86 0.032
+Δ(Pi/ Pj)
+0.0045 0.318
+ΔMt
+Constant 0.74 0.535
+TABLE: [['I', 'Coefficient', 'P > |z|'], ['L1', '0.02', '0.891'], ['L2', '-0.02', '0.891'], ['Δ(Pi/ Pj)', '-334.85', '0.425'], ['ΔMt', '1.07', '0.005'], ['Constant', '113.20', '0.000']]
+
+TABLE: [['U', 'Coefficient', 'P > |z|'], ['L1', '0.475', '0.070'], ['L2', '0.406', '0.331'], ['Δ(Pi/ Pj)', '-2.86', '0.032'], ['ΔMt', '0.0045', '0.318'], ['Constant', '0.74', '0.535']]
+
+
+The estimated effect of the percentage change in relative prices on the natural unemployment rate is
+negative and significant, whereas the coefficient of change in the money supply is positive but
+insignificant. Both the first lag variable and the entire model are significant.
+5.2 Conclusion
+The majority of the results match our expectations when we compare them to our discussion of
+potential outcomes. The change in relative prices was significantly and negatively impacted by the
+change in the money supply. The change in money supply had the expected direct effect, despite some
+irregularities in the coefficient of change in relative price when viewed in the context of real variables.
+-The findings indicate that a 1% increase in \M will result in a 1.07% increase in real investments.
+Overall, the empirical findings demonstrate that relative prices are impacted by changes in the money
+supply.
+This finding contradicts the notion that variations in real variables—such as shifts in the
+unemployment rate or technological shocks—are the only factors causing changes in relative
+prices.Furthermore, because changes in relative prices have an indirect effect on real economic
+variables like real investment variation, the natural unemployment rate, and real potential output
+variation, they also serve as monetary policy transmission mechanisms through their manipulation of
+the money supply.
+
+5.3 Implications
+Regardless of how money affects relative prices, the majority of economists concur that it is not
+neutral in the short term.On the other hand, if money influences relative prices, managing monetary
+policy becomes significantly more difficult for policymakers. They will have to keep an eye on how
+credit and money are being distributed throughout the whole economy. They will need to map out the
+distinct ways that various economic sectors will be impacted. The economy will redistribute income
+simply because of changes in relative prices, and this could lead to either a rise or fall in the
+concentration of income.
+Working with the quantity theory of money also produced the important finding that changes in real
+variables lead to changes in relative prices, but changes in absolute prices are attributed to monetary
+factors. Put differently, given the money supply, money velocity, and volume of goods transactions,
+adjustments brought about by a genuine shock to relative prices result in compensatory measures in
+other prices, maintaining the level of absolute prices unaltered.Austrian economists assert that the
+newly created funds are initially used to buy specific goods and services when the central bank or
+commercial banks expand credit and money supply.These products become more in demand in
+relation to other products, which raises their prices in comparison to other prices. The demand for
+other goods will rise as the new money permeates the economy, driving up the price of those goods as
+well. The redistribution of wealth and income benefits those who obtained the new currency early in
+the process, while those who received it later on lose out.As such, there are two types of relative price
+changes. The first is the redistribution of income, from late to early recipients of the new money, that
+occurs during the inflationary process.The second is the continuous, irreversible changes in wealth
+and income that occur even after the money has been distributed across the economy. This long-term
+change in the distribution of wealth and income shows how money is ultimately non-neutral.
+
+Chapter 6
+Summary
+6.1 Context and objective of study
+Our goal in this research is to evaluate the direct effects of money supply expansion on relative price
+changes as well as the indirect effects of changes in the money supply and relative price changes on
+other significant variables such as inflation, unemployment, and investment. We compute relative
+prices using the ratio of the Consumer Price Index to the Wholesale Price Index in order to remove
+the effect of price inertia and only observe changes in relative prices. Using a quarterly database that
+covers the Indian economy from 2011:1 to 2021:2, our goal is to investigate the direct impact of
+monetary policy on relative prices.We also try to investigate the indirect effects of monetary policy on
+long-term variables such as the natural unemployment rate, real investment variation, and the rate of
+inflation through changes in relative prices.
+Relevantly, our study concludes that money is not neutral in the non-traditional sense because
+variations in the money supply impact relative prices and, consequently, the distribution of resources
+within the economy. The substantial ramifications of this discovery must be considered in the
+monetary policy transmission mechanisms.
+6.2 Major Findings
+To facilitate summarization, the data can be divided into two sections:
+1. How changes in the money supply (M2) affect other real variables and relative prices (Pi/Pj).
+
+2. How other real variables are affected when the relative price (PI/Pi) changes.
+Our analysis's first section demonstrates how changes in the money supply have a negative impact on
+changes in relative prices (CPI/WPI).Since real investment (I) was positively impacted by changes in
+the money supply (M2) as well, it is safe to conclude that money neutrality is ruled out.
+In the second section of our study, we examined how changes in relative prices (CPI/WPI) could have
+an indirect impact on real variables by affecting the money supply (M2). In this case, the natural
+unemployment rate is inversely correlated with relative price, and theory indicates that it also has
+indirect effects on other real variables.
+6.3 Conclusion
+The quantity theory of money states that changes in employment, aggregate output, or any other factor
+influencing production costs are the only real factors that can impact changes in relative prices. There
+are other real factors that could be in play, such as changes in aggregate output, firm monopoly power,
+shortages of specific goods, or union pressure. The empirical results of this study show that changes
+in the money supply, in addition to changes in real variables, also cause changes in relative prices. If
+monetary policy leads to changes in relative prices, we can assume that it also affects the allocation of
+production factors and the goods and services produced, resulting in redistribution of income.
+6.4 Policy Implication of the findings
+The empirical results of this study show that, in addition to variations in real variables, variations in
+the money supply also affect changes in relative prices. If monetary policy leads to changes in relative
+prices, we can assume that it also affects the allocation of production factors and the goods and
+services produced, resulting in redistribution of income. Our study's important conclusion in this
+regard is that money is not neutral in the non-traditional sense since changes in the money supply
+have an impact on relative prices, which then have an impact on how resources are distributed within
+an economy.
+
+Additionally, there is a significant consequence that needs to be taken into account when discussing
+the mechanisms through which monetary policy is transmitted—namely, through adjustments in
+relative prices. Policymakers would find it challenging to forecast the effects of real and monetary
+shocks on relative prices and, consequently, on the variables of interest, including real output growth,
+natural unemployment rate, inflation rate, and real investment variation.
+6.5 Contribution of the study
+This study evaluated the state of monetary policy in India using quarterly data from 2011 to 2021. We
+were able to learn more about the problem of money's non-neutrality, particularly in the context of
+India, thanks to this study. The application of monetary policy goes beyond merely managing growth
+and containing inflation to understanding how changes in the money supply affect the distribution of
+income within an economy.
+By more thoroughly examining the long-run bivariate relationships for variables other than real
+output, such as inflation, real investments, and unemployment rate, this study also broadens the scope
+of empirical research.
+An additional benefit of this research was that average prices were not utilized to examine how
+changes in the money supply affected the economy. We can see the money supply and, consequently,
+the impact of monetary policy on income redistribution by using relative prices.
+6.6 Limitations of the study
+The endogeneity problem among the variables in the aforementioned model is one of its many flaws.
+Relative price is impacted by changes in the money supply before other real variables are impacted.
+This has not been considered in this paper.
+
+The relative price to the consumer price is what we have used as the wholesale price index. Instead,
+we could have used the producers price index (PPI) to determine who experiences inflationary effects
+from money supply increases first. The wholesale price index prevents us from observing that.
+In addition, we must examine the data and the current economic climate in order to comprehend this
+impact within the context of India. Additionally, the time frame for evaluating the money's
+non-neutrality proposition needs to be extended.
+6.7 Scope for future research
+Both equations could have been used simultaneously by the model to track changes in the money
+supply, their impact on prices, and finally the real variable. We could have used the Generalized Mean
+Model for this.
+We still haven't thought about how monetary policy is impacted by global trade. We could have
+considered a second state or used a panel approach, applied to a collection of comparable nations, and
+then evaluated its impact on the money's non-neutrality proposition.
+If the economy ever experienced a period of time when it did not behave similarly to the other period,
+the model is ideal for taking dummy variables into account. We can extend the study's duration to
+include two periods in India's context—one before and one after economic liberalization—in order to
+examine the structural break.
+
+7. References
+1. Jean-Jacques, Tony Ekomie. (2013), &quot;A Multivariate Long-Run Money Neutrality
+Investigation: Empirical Evidence for CAMEO &quot;, Scientific Research an Academic Publisher
+2. Oliver Volckart. (1997), &quot;Early beginnings of the quantity theory of money and their context
+in Polish and Russian monetary policies &quot; Economic History Review
+3. Thomas M. Humphrey. (1999), &quot;The Quantity theory of money: Its historical evolution and
+role in policy debates &quot;,Federal Reserve Bank of Richmond
+4. Tito Belchior, Silva Moreira, Benjamin Miranda Tabak, Mario Jorge Mendonca, Adolfo Sachsida.
+(2015), &quot;An Evaluation of the Non-Neutrality of Money &quot;, PLOS One
+5. Marinko SKARE, Manuel BENAZIC, Daniel TOMIC. (2016), &quot;On the neutrality of money
+in CEE (EU member) states: A panel cointegration analysis &quot;, Acta Oeconomica Vol.66(2) pp.
+393-419
+6. James Bullard. (1999), &quot;Testing Long-Run Monetary Neutrality Propositions: Lessons from
+Recent Research &quot;,Federal Reserve Bank of St. Louis, Dec 1999
+7. Kuek, Tai Hock. (2016), &quot;A Review of Literature on Monetary Neutrality - The case of India
+&quot;, Munich Personal RePEc Archive
+8. Arintoko, Nunik Kadarwati. (2009), & quot;Is long-run monetary neutral? Evidence from Indonesia
+&quot;, Economic Journal of Emerging Markets

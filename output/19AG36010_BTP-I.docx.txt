@@ -1,0 +1,314 @@
+
+BACHELOR THESIS PROJECT -I
+Project – I (AG47007) report submitted to
+Indian Institute of Technology Kharagpur
+In partial fulfilment for the award of the degree of
+Bachelor of Technology in
+Agricultural and Food Engineering
+BY
+Tippagudisi Deepika Sravya
+19AG36010
+UNDER THE SUPERVISION OF
+Professor Anoop Ayyappan
+Department of Chemistry
+Indian Institute of Technology Kharagpur
+November 15, 2022
+0
+
+DECLARATION
+I certify that
+(a) The work contained in this report has been done by me under the guidance of
+my supervisor.
+(b) The work has not been submitted to any other Institute for any degree or
+diploma.
+(c) I have conformed to the norms and guidelines given in the Ethical Code of
+Conduct of the Institute.
+(d) Whenever I have used materials (data, theoretical analysis, figures, and text)
+from other sources, I have given due credit to them by citing them in the text of the
+thesis and giving their details in the references. Further, I have taken permission from
+the copyright owners of the sources, whenever necessary.
+Date: November 06, 2022 Name: Tippagudisi Deepika Sravya
+Place: Kharagpur Roll Number: 19AG36010
+1
+
+DEPARTMENT OF CHEMISTRY
+INDIAN INSTITUTE OF TECHNOLOGY KHARAGPUR
+KHARAGPUR – 721302, INDIA
+CERTIFICATE
+This is to certify that the project report submitted by Tippagudisi Deepika Sravya (Roll No.
+19AG36010) to the Indian Institute of Technology Kharagpur towards the partial fulfilment of
+requirements for the award of the degree of Bachelor of Technology in Agricultural and Food
+Engineering is a record of bonade work carried out by him under my supervision and guidance
+during Autumn Semester, 2022-23.
+Professor Anoop Ayyappan
+Date: November 15, 2022 Department of Chemistry
+Place: Kharagpur Indian Institute of Technology Kharagpur
+Kharagpur – 721302, India
+2
+
+Preface
+This Bachelor Thesis Project is based on Data aggregation and analysis for Web-based
+exploration of hydrocarbons in prebiotic chemistry. It is basically an application of
+computational methods on chemical compounds, usually referred to as computational
+chemistry. This thesis has been submitted for evaluation at the department of chemistry, Indian
+Institute of Technology Kharagpur. This thesis was done under the supervision of professor
+Anoop Ayyappan and with the guidance of a Research Scholar, Sandip Giri from the
+department of chemistry, Indian Institute of Technology Kharagpur.
+I would like to thank my supervisor professor Anoop Ayyappan for providing this
+opportunity to work in the field of computational chemistry. I also want to thank Sandip Giri
+for his constant guidance throughout the project and Katravath Vasu for working on the
+development of the web server.
+3
+
+Table of Contents
+1. Title page……………………………………………………………. 0
+2. Declaration………………………………………………………...... 1
+3. Certificate of Supervision……………………………………………2
+4. Preface…………………………………………………………......... 3
+5. Table of Contents…………………………………………………….4
+6. Chapters
+i. Introduction…………………………………………………... 5
+ii. Abstract………………………………………………………. 6
+iii. Data CRUD……………………………………………………7
+iv. Implementation………………………………………………...13
+iv. Conclusion……………………………………………………. 16
+v. References……………………………………………………17
+List of Figures:
+1. Illustration of the collection of data from various sources
+2. Illustration of Data Cycle
+3. Illustration of the block of code for the file conversion
+4. Example of SMILES representation
+5. Block of code for extraction of hydrocarbons
+6. Block of code for conversion of smile representation to the molecular formula
+7. Block of code for calculating molecular weight
+8. PubChem Molecular weight Histogram
+9. QM9 Molecular weight Histogram
+10. PyAR Molecular weight Histogram
+11. Block of code for log file extraction
+12. Block of code for out file extraction
+13. Illustration of Web and Database model
+14. Workflow of the web server
+4
+
+Data aggregation and Analysis for
+Web-Based Exploration of Hydrocarbons
+in Prebiotic Chemistry
+Introduction
+The design, discovery, and fabrication of new chemical compounds are essential to solve
+various issues such as environmental pollution, global warming, and CO2 to O2 conversion.
+Building basic knowledge of these chemical compounds has become an important task to tackle
+these issues. Database systems are constructed to store and reuse the collected data. To gather
+molecular properties and construct chemical databases, experimental measurements are often
+employed. However, the experimental approaches are sometimes very expensive. In some cases,
+it is difficult or impossible to measure the molecular properties of some compounds. Therefore,
+even if these large-scale molecular databases are highly necessary, it is not easy to construct
+them experimentally.
+Large-scale databases have many useful applications, such as in virtual screening or as
+expert systems to find molecules with desired properties or perform fast molecular property
+estimations. On the contrary, large data sets play essential roles in the machine- and
+deep-learning methods. In chemistry, and data-driven studies the size of the dataset is a critical
+factor. Being the most significant aspect in the development of the website, the dataset should
+be accurate. The display of the information solely depends upon the availability of the data.
+Hence, it is important to gather a large amount of information on molecules. As the thesis
+project is exclusively for hydrocarbons, it is important to gather all the information related to
+hydrocarbons and help the user to retrieve the information. Therefore, this thesis project aims to
+assemble the available data in a single folder and compare them with the dataset available on
+the internet.
+5
+
+Abstract
+As the data is building up day by day, we need to keep a record of the data which can be
+helpful for analytics and evaluation. Now we don’t have data in gigabytes or terabytes but in
+Zetta, bytes and petabytes and this data can not be handled with day-to-day software such as
+Excel or Matlab. Therefore in this report, we will be dealing with large data sets with the
+high-level programming language ’Python’. The main goal of this project is to aggregate and
+analyze the data on hydrocarbons collected from the different data sources available on the
+internet.
+Stimulated by many web-based database models in both industry and academic sectors,
+we designed a web app to enable the community a browsing experience from a search bar. A
+general view of web server workflow is given here. It consists of three python files, one
+template folder, a CSV file and some binary files. Apart from the standard library, this model is
+based on four other python libraries. These are, (1) SQLite3, (2) flask, (3) request and (4)
+RDKit. You can easily install all of them using pip or conda package manager. SQLite3 is a
+python based lite module of MySQL. It basically converts a CSV file to table format. The
+aggregation of the data is required to store it in a database. The data aggregation and analysis
+can be automated by building some basic algorithms using the python packages available. The
+data aggregation of hydrocarbons has been done from various sources and aggregated in CSV
+files which can be installed in the database later.
+Figure 1: Illustration of the collection of data from various sources
+6
+
+The data aggregation and analysis will help us to derive valuable insights and get a deep
+knowledge of the dataset. The data cycle helps us in understanding it more clearly.
+Figure 2: Illustration of Data Cycle
+DATA CRUD:
+The traditional spreadsheet cannot handle a query from multiple rows, but a SQL-based query
+search can overcome this issue. Also, one can use many CSV files with a common column in a table
+with a unique ID. To develop the database required for web-based exploration, data aggregation with
+some preprocessing techniques like data cleaning, and removal of unrelated data has to be done. The
+7
+
+first step of data aggregation is extraction and generating the data. The extraction has been done from
+two sources. The sources are namely,
+1. PubChem
+2. QM9.csv
+3. PyAR
+QM9.csv file is a direct CSV file which can be integrated with other data which is
+already extracted from the qm9 website by following the preprocessing techniques. Whereas,
+Pubchem is a web application where the dataset is available as it is the world’s largest collection
+of freely accessible chemical information. The dataset from PubChem is in the format of dat
+files i.e., file_name.dat which is then converted into a CSV file using a python programming
+language. The block of code to convert the .dat file to a .csv file is shown below.
+Figure 3: Illustration of the block of code for the file conversion
+PyAR
+PyAR stands for "Python program for aggregation and reaction", It's an Automated
+prediction of unknown reactions between two reactants (A+B) and prediction of the geometries
+of aggregates, atomic clusters etc. also an Automated search for reactions for bonds forming
+between two atoms in two different molecules. This will generate a molecular aggregate/cluster
+of size up to 10 with an XTB package using 8 trial orientations. The A.xyz is a standard
+cartesian coordinate file.
+The idea and the initial work started with Dr. Mark P. Waller at the University of
+Muenster in 2011. Mark is currently at pending.ai. Later Dr. Surajit Nandi as a PhD student in
+AnoopLab made immense contributions. Another major help came from a Masters project
+student, Deebankur Bhattacharyya
+8
+
+The extraction of HydroCarbons is done from this automated prediction PyAR in Zip file
+format with multiple folders and each folder has multiple CSV, log and out files with significant
+SMILES
+What are SMILES?
+SMILES (Simplified Molecular Input Line Entry System) is a chemical notation that
+allows a user to represent a chemical structure in a way that can be used by the computer.
+SMILES is an easily learned and flexible notation. The SMILES notation requires that you learn
+a handful of rules.
+Figure 4: Example of SMILES representation
+SMILES was developed through funding from the U.S. Environmental Protection
+Agency, Mid-Continent Ecology Division-Duluth, (MED-Duluth) Duluth, MN to the Medicinal
+Chemistry Project at Pomona College, Claremont, CA and the Computer Sciences Corporation,
+Duluth, MN. Several publications discuss SMILES in more detail, including Anderson et al.
+1987, Weininger 1988, Weininger et al. 1989, and Hunter et al., 1987.
+HydroCarbon Extraction
+Hydrocarbons are compounds comprised exclusively of carbon and hydrogen and they are
+by far the dominant components of crude oil, processed petroleum hydrocarbons (gasoline,
+diesel, kerosene, fuel oil, and lubricating oil), coal tar, creosote, dyestuff, and pyrolysis waste
+products.
+9
+TABLE: [['What are SMILES?'], ['SMILES (Simplified Molecular Input Line Entry System) is a chemical notation that'], ['allows a user to represent a chemical structure in a way that can be used by the computer.'], ['SMILES is an easily learned and flexible notation. The SMILES notation requires that you learn'], ['a handful of rules.'], ['']]
+
+TABLE: [['SMILES was developed through funding from the U.S. Environmental Protection'], ['Agency, Mid-Continent Ecology Division-Duluth, (MED-Duluth) Duluth, MN to the Medicinal'], ['Chemistry Project at Pomona College, Claremont, CA and the Computer Sciences Corporation,'], ['Duluth, MN. Several publications discuss SMILES in more detail, including Anderson et al.'], ['1987, Weininger 1988, Weininger et al. 1989, and Hunter et al., 1987.']]
+
+
+The extracted PubChem.CSV and QM9.CSV are a combination of files with multiple
+elements with multiple molecular forms. A Web-Based Exploration of Hydrocarbons in Prebiotic
+Chemistry needs data on molecules in the form of Hydrocarbons preferably from PyAR. For
+comparison, Have to extract Hydrocarbons from PubChem.csv and QM9.csv which is done for
+further processing.
+After the conversion of data has been done from the PubChem data file to the CSV file,
+It is easier to analyse the data through CSV files also referred to as comma-separated values.
+Now, extract the compounds exclusively consisting of hydrogen and carbons from the CSV file.
+The block of code to extract the data is shown below.
+Figure 5: Block of code for extraction of hydrocarbons
+By using the RDKit module, I have converted the smile representation to the molecular
+formula for the calculation of molecular weight. Each molecular smile representation has been
+converted to the molecular formula by using the “MOLFROMSMILES” method available in the
+RDKit module.
+10
+
+Figure 6: Block of code for conversion of smile representation to the molecular formula
+Now, the calculation of molecular weight is done using the below described algorithm .
+Figure 7: Block of code for calculating molecular weight
+Using molecular weights from the PubChem Hydrocarbon csv, QM9 Hydrocarbon csv,
+and PyAR csv files, A plotted histogram graph lets us know how many molecules are in each
+file.
+11
+
+Figure 8: PubChem Molecular weight Histogram
+Figure 9: QM9 Molecular weight Histogram
+12
+
+Figure 10: PyAR Molecular weight Histogram
+Implementation
+A Web-Based Exploration of Hydrocarbons in Prebiotic Chemistry needs the data, which
+we take from PyAR dataset. Is PyAR data good enough? While comparing, PyAR CSV file had
+less data than QM9 where the remaining data was in .out file and .log file format for each and
+every SMILES. Using the algorithm described below, I extracted data like Energy, Dipole
+moment, Rotational constants(A, B, C), Final single point energy, Total Enthalpy, Entropy and
+Gibbs free energy from the .out and.log files for all SMILES and combined it into a single
+merged CSV file.
+13
+
+Figure 11: Block of code for log file extraction
+Figure 12: Block of code for out file extraction
+14
+
+Since the aggregation of data has been done, this data merged as CSV files can be
+processed into a database software like MySQL, a relational database management system using
+CRUD operations mentioned in the picture shown below. This CRUD operation helps in
+manipulating and analysing the data. After the creation of the database, it can be linked to the
+web server for retrieval of the information from the user end.
+Figure 13: Illustration of Web and Database model
+The below picture describes the workflow of the web server where the web server uses the
+merged CSV files processed into the database using SQL programming language.
+Figure 14: Workflow of the web server
+15
+
+Conclusion
+This thesis project aims to aggregate the data from various sources and analyse it. As
+described above in this report the data collected from various sources are now merged into a
+single file. The information present in PyAR dataset is now updated with new information like
+molecular weight, Energy, Dipole moment, Rotational constants(A, B, C), Final single point
+energy, Total Enthalpy, Entropy and Gibbs free energy. This dataset now can be used for the
+development of the web server and processed into a database which is useful for the retrieval of
+information. The exploration of hydrocarbons is a part of chemical space. This model of
+merging the files can be used with other combinations of heavy atoms to explore more complex
+molecules. These hydrocarbon data will improve the quality of the existing dataset to build a
+robust ML model in order to find unknown molecular information. If the dataset is accurate, it
+becomes easier to build the algorithms and analyse the information. The aggregation of data,
+manipulation of data and analysing gives us valuable insights. These insights can be used to
+update the wrong information and deliver accurate values to the users. A good dataset is always
+without any wrong information, wrong data, empty cells, or wrong format of data.
+Future Work:
+Although this thesis project is completed, there are many improvements that could be
+made. The main issue is to make the dataset more accurate by comparing it with various
+sources available and there is a need to add a lot of information to the dataset for the vast
+exploration. There is also a need to integrate other datasets consisting of various information
+available. After successful changes are made to the dataset, it can be linked to the database and
+the web server which can be made accessible to the users over the internet. The web server
+needs to be maintained and updated with new datasets or information from time to time.
+16
+
+References
+(1) Coley, C. W. Defining and exploring chemical spaces. Trends in Chemistry 2021, 3,
+133–145.
+(2) Fink, T.; Bruggesser, H.; Reymond, J.-L. Virtual exploration of the small-molecule
+chemical universe below 160 daltons. Angewandte Chemie International Edition 2005,
+44, 1504–1508.
+(3) Fink, T.; Reymond, J.-L. Virtual exploration of the chemical universe up to 11 atoms
+of C, N, O, F: assembly of 26.4 million structures (110.9 million stereoisomers) and
+analysis for new ring systems, stereochemistry, physicochemical properties, compound
+classes, and drug discovery. Journal of chemical information and modeling 2007, 47,
+342–353.
+(4) Blum, L. C.; Reymond, J.-L. 970 million druglike small molecules for virtual screening
+in the chemical universe database GDB-13. Journal of the American Chemical Society
+2009, 131, 8732–8733.
+(5) Ruddigkeit, L.; Van Deursen, R.; Blum, L. C.; Reymond, J.-L. Enumeration of 166
+billion organic small molecules in the chemical universe database GDB-17. Journal of
+chemical information and modeling 2012, 52, 2864–2875.
+(14) Lepeshkin, S. V.; Baturin, V. S.; Naumova, A. S.; Oganov, A. R. “Magic” Molecules and
+a New Look at Chemical Diversity of Hydrocarbons. The Journal of Physical Chemistry
+Letters 2022, 13, 7600–7606.
+(6) Rzepa, H. Teaching FAIR in Computational Chemistry: Managing and publishing data
+using the twin tools of Compute Portals and Repositories. 2022,
+(7) Reymond, J.-L. The chemical space project. Accounts of Chemical Research 2015, 48,
+722–730.
+(8) Reymond, J.-L.; Awale, M. Exploring chemical space for drug discovery using the chem-
+ical universe database. ACS chemical neuroscience 2012, 3, 649–657.
+(9) Dobson, C. M., et al. Chemical space and biology. Nature 2004, 432, 824–828.
+(10) Reymond, J.-L.; Van Deursen, R.; Blum, L. C.; Ruddigkeit, L. Chemical space as a
+source for new drugs. MedChemComm 2010, 1, 30–38.
+(11) Von Lilienfeld, O. A. First principles view on chemical compound space: Gaining rigor-
+ous atomistic control of molecular properties. International Journal of Quantum Chem-
+istry 2013, 113, 1676–1689.
+17
+TABLE: [['133–145.'], ['(2) Fink, T.; Bruggesser, H.; Reymond, J.-L. Virtual exploration of the small-molecule'], ['chemical universe below 160 daltons. Angewandte Chemie International Edition 2005,'], ['44, 1504–1508.'], ['(3) Fink, T.; Reymond, J.-L. Virtual exploration of the chemical universe up to 11 atoms'], ['of C, N, O, F: assembly of 26.4 million structures (110.9 million stereoisomers) and'], ['analysis for new ring systems, stereochemistry, physicochemical properties, compound'], ['classes, and drug discovery. Journal of chemical information and modeling 2007, 47,'], ['342–353.'], ['(4) Blum, L. C.; Reymond, J.-L. 970 million druglike small molecules for virtual screening'], ['in the chemical universe database GDB-13. Journal of the American Chemical Society'], ['2009, 131, 8732–8733.'], ['(5) Ruddigkeit, L.; Van Deursen, R.; Blum, L. C.; Reymond, J.-L. Enumeration of 166'], ['billion organic small molecules in the chemical universe database GDB-17. Journal of'], ['chemical information and modeling 2012, 52, 2864–2875.'], ['(14) Lepeshkin, S. V.; Baturin, V. S.; Naumova, A. S.; Oganov, A. R. “Magic” Molecules and'], ['a New Look at Chemical Diversity of Hydrocarbons. The Journal of Physical Chemistry'], ['Letters 2022, 13, 7600–7606.'], ['(6) Rzepa, H. Teaching FAIR in Computational Chemistry: Managing and publishing data'], ['using the twin tools of Compute Portals and Repositories. 2022,'], ['(7) Reymond, J.-L. The chemical space project. Accounts of Chemical Research 2015, 48,'], ['722–730.'], ['(8) Reymond, J.-L.; Awale, M. Exploring chemical space for drug discovery using the chem-'], ['ical universe database. ACS chemical neuroscience 2012, 3, 649–657.'], ['(9) Dobson, C. M., et al. Chemical space and biology. Nature 2004, 432, 824–828.'], ['(10) Reymond, J.-L.; Van Deursen, R.; Blum, L. C.; Ruddigkeit, L. Chemical space as a'], ['source for new drugs. MedChemComm 2010, 1, 30–38.'], ['(11) Von Lilienfeld, O. A. First principles view on chemical compound space: Gaining rigor-'], ['ous atomistic control of molecular properties. International Journal of Quantum Chem-'], ['istry 2013, 113, 1676–1689.'], [''], ['']]
+

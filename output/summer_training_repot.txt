@@ -1,0 +1,263 @@
+
+Summer Training - ME48701
+Report submitted to
+Indian Institute of Technology, Kharagpur
+in partial fulfillment for the award of the degree of
+Bachelor of Technology
+In
+Manufacturing Science and Engineering
+Department of Mechanical Engineering
+By
+Katravath Vasu (19MF3IM04)
+Data Scientist Intern at Fidelity Investments, India
+
+DECLARATION BY THE STUDENT
+I certify that
+(a) The work contained in this report has been done by me under the guidance of my
+supervisor.
+(b) The work has not been submitted to any other Institute for any degree or diploma.
+(c) I have conformed to the norms and guidelines given in the Ethical Code of Conduct
+of the Institute.
+(d) Whenever I have used materials (data, theoretical analysis, figures, and text) from
+other sources, I have given due credit to them by citing them in the text of the thesis and
+giving their details in the references. Further, I have taken permission from the copyright
+owners of the sources, whenever necessary.
+Katravath Vasu
+IIT Kharagpur, 19MF3IM04
+October 17, 2023 Department of Mechanical Engineering
+
+ACKNOWLEDGEMENT
+With great pleasure, I would like to express my profound sense of gratitude and
+indebtedness to Fidelity Investments India, for the invaluable Data Science internship
+opportunity. I would also like to thank the Career Development Center at IIT Kharagpur
+for their crucial role in connecting me with this opportunity. I appreciate the guidance and
+mentorship from my colleagues and mentors at Fidelity Investments India, which has
+greatly enhanced my understanding of the field. This internship provided me the
+opportunity to delve deeper into Generative AI in Natural Language Processing.
+My family and friends have been a constant source of motivation, and I want to thank my
+institute, IIT Kharagpur, for fostering an environment conducive to learning. Thank you
+for the collective support in shaping my professional growth.
+Katravath Vasu
+IIT Kharagpur, 19MF3IM04
+October 17, 2023 Department of Mechanical Engineering
+
+CERTIFICATE OF COMPLETION
+
+ABSTRACT
+This project centers on the development of an advanced fact-based question answering
+system employing Large Language Models (LLMs). In an age of remarkable Natural
+Language Processing (NLP) advancements, LLMs serve as the bedrock for delivering
+precise, contextually aware responses to factual queries. A primary focus lies in the art of
+prompt engineering, a critical element in directing these LLMs to understand user queries
+effectively and extract accurate information.
+The project's methodology underscores the significance of crafting meticulously
+structured prompts that cater to specific domains and question types. These prompts
+provide the necessary context and constraints for LLMs to generate precise responses.
+The integration of LLMs as the backbone of the system is a pivotal point in the project's
+architecture, encompassing the careful selection of models, fine-tuning to adapt them to
+specific tasks, and the generation of contextually relevant answers.
+Additionally, this report addresses various challenges inherent to employing LLMs, with
+a particular focus on biases and resource management. It delves into the strategies
+employed to mitigate biases and discusses the resource-intensive nature of LLM training.
+Through this project, we explore how LLMs are catalyzing a revolution in the field of
+fact-based question answering, reshaping the landscape of Natural Language Processing.
+The report offers valuable insights into the current state of LLM integration in NLP
+applications and anticipates further advancements on the horizon.
+
+Chapter 1
+1.1 Introduction
+The ever-expanding realm of natural language processing (NLP) and large language
+models (LLMs) has ushered in a new era of possibilities in various applications, with
+fact-based question answering standing at the forefront. Harnessing the capabilities of
+LLMs for effectively answering questions posed in natural language has the potential to
+revolutionize information retrieval, making it more intuitive and accessible for users
+across diverse domains. This report delves into the design and implementation of an
+end-to-end framework for fact-based question answering, a development that leverages
+open-source pre-trained Large Language Models (LLMs). The project focuses on the
+integration of LLMs to enable accurate and context-aware responses to questions asked in
+natural language, enhancing the user experience in seeking precise information.
+In the subsequent sections of this report, we will detail the methodology employed,
+discuss the design and implementation of the framework, showcase the web application,
+and delve into the integration of LLMs, prompt optimization, results, and the potential
+implications and future directions for this research.
+The utilization of LLMs in fact-based question answering is not only a testament to the
+advancement of NLP but also holds the promise of bridging the gap between human
+communication and machines' ability to comprehend and respond effectively. It is a
+testament to the ongoing evolution of AI and its role in augmenting human capabilities.
+This project seeks to contribute to this exciting and transformative journey in the field of
+NLP.
+
+Chapter 2
+2.1 Methodology and Observations
+Our objective was to enable factual question answering on customer timeline data. When
+the user poses a natural language question on the timeline data and the system provides a
+natural language response to the question. So, the questions are of two types that can be
+posed by the user. One is the fact based questions and the other is inferential questions.
+1. Fact based questions
+● What is the channel most used by a customer with ID 2020212?
+● What are the different transaction events done by the customer?
+2. Inferential questions
+● What is the right source to reach out to a particular customer?
+● Help me to identify the friction points that customers face?
+During my internship, I had the opportunity to work on fact based questions which means
+whenever the user poses the questions as mentioned above under the fact based questions,
+our pipeline needs to answer the question in a natural language. Our dataset consisted of
+many transactions, web and call interactions, and other related information of a large
+number of customers. With immense research, I had crafted two approaches to develop
+the fact based question answering system.
+Approaches:
+1. Context based question answering
+2. Query based question answering
+In the subsequent topics, we will detail the approaches with a flow chart along with a
+broader level pipeline to understand the implemented approaches.
+
+2.2 Question-Answering Pipeline
+2.3 Prompt Engineering
+In the context of fact-based question answering, the role of prompt engineering takes on a
+particularly significant role. This project focuses on how prompt engineering can be
+employed to enhance the performance of Large Language Models (LLMs) in accurately
+responding to questions that require factual information.
+In fact-based question answering, the precision and accuracy of responses are of
+paramount importance. Users expect direct and factual answers to their questions.
+Effective prompts serve as the bridge between the user's query and the LLM's ability to
+provide a precise response. They are instrumental in guiding the model to understand the
+context and constraints of the question.
+There are 3 types of prompt engineering techniques.
+1. Zero-Shot Prompting (No example is provided in the prompt)
+2. Few-Shot Prompting (Few examples are provided in the prompt)
+3. Chain of Thought Prompting (Examples and its reasoning are provided)
+We had employed Chain of Thought Prompting for better understanding by the model.
+Chain of Thought prompting provides the reasoning to the example questions given in the
+prompt. Furthermore, the details of prompt engineering are provided below.
+
+1. Contextual Clues: Prompt engineering begins with establishing contextual clues within
+the prompts. These cues help the LLMs understand the context of the question, such as
+specifying the domain or relevant entities.
+2. Question Types: Fact-based questions come in various types (e.g., who, what, where,
+when). The prompt structure should match the question type to elicit the most relevant
+answer.
+3. Keyword Emphasis: Prompts can emphasize specific keywords or phrases, directing
+the model's attention to crucial information that needs to be extracted from the text.
+4. Conciseness: Effective prompts are concise, avoiding unnecessary information or
+ambiguity. They guide the model without overwhelming it.
+Prompt engineering in fact-based question answering often requires customization based
+on the specific domain or subject matter. For instance, prompts used in the medical
+domain would differ significantly from those used in historical queries. Customization is
+crucial to align prompts with the nuances of the domain.
+Therefore, Prompt engineering is a pivotal technique in the realm of fact-based question
+answering using LLMs. It ensures that the LLMs comprehend the context and
+requirements of the question, resulting in precise, factual responses. The success of a
+fact-based QA system depends on well-crafted prompts, customized for the domain and
+user needs. When prompt engineering is executed effectively, it significantly enhances
+the capabilities of LLMs in delivering accurate and contextually relevant answers to a
+diverse array of fact-based queries. In the context of our domain, effective prompts
+should be employed to ensure the pipeline answers correctly with respect to the natural
+language question.
+
+2.4 Large Language Models(LLMs)
+In the domain of fact-based question answering, Large Language Models (LLMs)
+represent a fundamental technological advancement. These models have revolutionized
+the field by demonstrating the capacity to understand and respond to natural language
+queries in a remarkably precise and contextually aware manner. This project places LLMs
+at the core of its architecture, recognizing them as a cornerstone for delivering accurate
+and contextually relevant answers to factual queries.
+Integration into the Framework:
+This project integrates LLMs as a central component of the fact-based question
+answering framework. The following are some key facets of LLM integration:
+- Model Selection: The project involves the careful selection of LLMs based on their
+suitability for the tasks at hand. For instance, specific LLMs may be chosen for
+SQL-based answer retrieval while others for generating natural language responses.
+- Fine-Tuning and Training: In some cases, LLMs may require fine-tuning or training to
+adapt them to the project's specific requirements. This process ensures that the LLMs are
+optimized for the intended tasks.
+- Response Generation: LLMs play an essential role in crafting responses to user queries.
+They receive the prompts and generate contextually relevant answers by drawing upon
+their vast language understanding and knowledge.
+The rapid development of LLMs promises even more remarkable advancements in the
+realm of fact-based question answering. Improved models and techniques for handling
+biases will further enhance their utility in real-world applications. The ongoing evolution
+of LLMs is a testament to their pivotal role in augmenting human communication and
+
+information retrieval, and their continuous integration into projects like this will continue
+to reshape the landscape of natural language processing.
+Figure 1: Large Language Models (LLMs) Architecture
+
+Chapter 3
+Results
+We explored the different open-source LLMs to decide which performs better in
+understanding the context and adapt to our custom dataset. The explored LLMs are:
+1. MPT-7B
+2. T5-Transformer -based model
+3. Falcon-7B
+4. LLaMa-7B
+5. Vicuna-7B
+6. GPTForQuestionAnswering
+7. NSQL-6B
+We experimented with different prompts and crafted an optimized prompt for the above
+explored models to work better with respect to our custom dataset. Out of the above
+models MPT-7B model performed better in understanding of the context and provided
+better results when compared to the other model in case of approach 1. Considering the
+limitations of approach 1, we worked on a different approach which could solve almost
+all of the limitations of 1st approach.
+Limitations of approach 1 - Context based question answering:
+1. Limitation of context length of the model
+2. Lack of numerical reasoning
+3. Misinterpretation of context
+To solve the limitations of approach 1, we came up with the second approach:
+query-based question answering. In case of this experimentation with different LLMs,
+
+NSQL LLM provided the best results in generating the SQL queries and MPT model had
+been employed in generating the natural language response. These open-source models
+are available in the HuggingFace Transformers library in python programming language.
+We used the aforesaid library to work with LLMs and develop a pipeline to answer the
+natural language question posed by the user.
+Within the scope of this project, a web application was developed and deployed,
+providing a user-friendly interface for the submission of natural language queries. The
+application utilizes technologies like Streamlit and FastAPI to facilitate seamless
+interaction between users and the underlying question-answering framework.
+One of the distinctive features of this framework is its incorporation of LangChain, a
+novel approach to harness the capabilities of LLMs. We have integrated two specialized
+LLMs into the system: one specifically engineered for SQL-based answer retrieval and
+another adept at crafting natural language responses. The fusion of these two LLMs
+offers a unique solution, bridging the gap between structured data retrieval and the
+generation of human-like responses. To further enhance the quality of natural language
+responses, the Chain of Thought Prompting (COT) methodology was employed. By
+crafting optimized prompts, we aimed to amplify the system's ability to provide
+contextually accurate and coherent answers.
+
+Chapter 4
+Conclusion
+In the pursuit of enhancing fact-based question answering using Large Language Models
+(LLMs), this project has uncovered a myriad of insights and achievements that
+underscore the transformative power of LLMs in the realm of Natural Language
+Processing (NLP). The utilization of LLMs as a cornerstone of our framework has
+revolutionized the precision, contextual awareness, and user experience in fact-based
+query responses.
+Prompt engineering, a central component of the project, has been instrumental in
+optimizing interactions between users and LLMs. The crafting of prompts tailored to
+specific domains, question types, and user preferences has led to a significant
+improvement in the quality of responses. These well-structured prompts act as a bridge
+between users' queries and LLMs' ability to comprehend, process, and deliver factual
+information with accuracy and context-awareness.
+Integration of LLMs has facilitated not only natural language understanding but also
+seamless access to vast knowledge bases, enabling the extraction of factual data from a
+plethora of sources. By selecting and fine-tuning LLMs to specific tasks, our framework
+has excelled in providing contextually relevant answers and fostering coherent,
+human-like conversations.
+In conclusion, this project has reinforced the pivotal role of LLMs in the field of
+fact-based question answering. The synergistic combination of prompt engineering and
+LLMs has created a potent and versatile system that not only aligns with current NLP
+trends but also sets the stage for an exciting future filled with advancements in
+human-machine communication and information retrieval.
+
+Chapter 5
+References
+1. Open LLM Leaderboard - a Hugging Face Space by HuggingFaceH4. (2023). Retrieved October
+16, 2023, from Huggingface.co website:
+https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard
+2. Vaswani, A., Brain, G., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., … Polosukhin, I.
+(2017). Attention Is All You Need. Retrieved from
+https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-
+Paper.pdf
+3. nsheppard. (2023). About Us | Find Your Fidelity | Fidelity Investments India. Retrieved October
+16, 2023, from Fidelity India website: https://india.fidelity.com/about-us/

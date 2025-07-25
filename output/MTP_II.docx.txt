@@ -1,0 +1,986 @@
+
+Natural Language Processing Powered Maintenance Solutions for
+Mechanical Challenges
+Master Thesis Project
+By
+Katravath Vasu
+19MF3IM04
+Under the supervision of
+Dr. Akhilesh Kumar
+Industrial and Systems Engineering
+Indian Institute of Technology Kharagpur
+Department of Industrial Systems and Engineering
+April 26, 2024
+
+DECLARATION
+I certify that
+(a) The work contained in this report has been done by me under the guidance of my
+supervisor.
+(b) The work has not been submitted to any other Institute for any degree or diploma.
+(c) I have conformed to the norms and guidelines given in the Ethical Code of Conduct
+of the Institute.
+(d) Whenever I have used materials (data, theoretical analysis, figures, and text) from
+other sources, I have given due credit to them by citing them in the text of the thesis
+and giving their details in the references. Further, I have taken permission from the
+copyright owners of the sources, whenever necessary.
+Date: April 26, 2024 Katravath Vasu
+Place: IIT Kharagpur 19MF3IM04
+1
+
+INDUSTRIAL AND SYSTEMS ENGINEERING
+INDIAN INSTITUTE OF TECHNOLOGY KHARAGPUR
+CERTIFICATE
+This is to certify that the project report entitled “Natural Language Processing
+Powered Maintenance Solutions for Mechanical Challenges” submitted by
+Katravath Vasu (19MF3IM04) to the Indian Institute of Technology Kharagpur towards
+partial fulfilment of requirements for the award of the degree of Master of Technology
+in Industrial Systems Engineering and Management is a record of bona fide work
+carried out by him under our supervision and guidance during Autumn Semester,
+2023-24.
+Date: April 26, 2024 Dr. Akhilesh Kumar
+Place: Kharagpur Indian Institute of Technology Kharagpur
+2
+
+Acknowledgements
+I would like to acknowledge and give special thanks to my supervisor Dr. Akhilesh Kumar,
+Department of Industrial and Systems Engineering, IIT Kharagpur for his keen interest, guidance and
+support. I sincerely thank him for his insightful and critical suggestions and his immense help during
+the study. I also thank all the professors of the Department of Industrial and Systems Engineering for
+their valuable suggestions and motivation to complete my course. Their immense knowledge and
+valuable advice carried me through all the stages of my Master Thesis project work, which wouldn’t
+have been possible without their supervision. I would also like to give my warmest thanks to my
+friends at IIT Kharagpur for their constant support and motivation throughout my work.
+3
+
+Table of Contents
+DECLARATION.....................................................................................................................................1
+CERTIFICATE........................................................................................................................................2
+Acknowledgements..................................................................................................................................3
+Table of Contents.....................................................................................................................................4
+List of Figures.......................................................................................................................................5
+Abstract....................................................................................................................................................6
+Chapter 1..................................................................................................................................................7
+Introduction.......................................................................................................................................7
+Chapter 2..................................................................................................................................................9
+Objectives and Dataset Description.................................................................................................9
+2.1 Objectives................................................................................................................................9
+2.2 Dataset Description...............................................................................................................10
+Chapter 3................................................................................................................................................12
+Methodology and Observations......................................................................................................12
+3.1 Data Preprocessing................................................................................................................13
+3.2 Text Mining...........................................................................................................................14
+3.3 N-Grams................................................................................................................................15
+3.4 Creation of Embeddings........................................................................................................17
+Chapter 4................................................................................................................................................19
+Long Short-Term Memory.............................................................................................................19
+4.1 Observations of Bidirectional-LSTM Intelligent System Model..........................................22
+Chapter 5................................................................................................................................................25
+Generative Artificial Intelligence using LSTM............................................................................25
+5.1 Observations of Generative AI using LSTM.........................................................................28
+Chapter 6................................................................................................................................................30
+Fine-Tuning Large Language Models............................................................................................30
+6.1 PEFT Technique....................................................................................................................32
+6.2 LLaMA - 2 Model fine tuning...............................................................................................34
+6.3 Observations of Fine-Tuning of LLM...................................................................................37
+Chapter 7................................................................................................................................................39
+Retrieval Augmented Generation..................................................................................................39
+Chapter 8................................................................................................................................................43
+Web Application..............................................................................................................................43
+Chapter 9................................................................................................................................................47
+Conclusion........................................................................................................................................47
+Chapter 10............................................................................................................................................49
+Improvisation of the RAG pipeline...................................................................................................49
+Chapter 11............................................................................................................................................50
+References......................................................................................................................................50
+4
+
+List of Figures
+5
+
+Abstract
+This thesis focuses on determining the maintenance solutions for the mechanical challenges using
+Natural Language Processing. In this thesis, an exploration of Natural Language Processing
+techniques has been done to extract valuable insights into the provided dataset. Given the success of
+Natural language processing in Text Generation, Text classification, Question-Answering, and
+Document summarization, in particular Question-answering, that has shown a lot of potential after the
+release of the research paper “Attention Is All You Need” and the rise of Artificial Intelligence tools
+like ChatGPT, Bard, etc. There is great hope that they will be equally effective after training
+(fine-tuning) the models or applying the Retrieval Augmented Generation pipeline with custom
+datasets. This thesis is specifically focused on training the development of a chat assistant to answer
+the questions related to maintenance solutions with a custom dataset of mechanical downtime issues
+and solutions. This study explores the practical uses of natural language processing (NLP) technology
+in addressing mechanical maintenance difficulties, building on the fundamental elements of NLP. It
+emphasises how sophisticated natural language processing (NLP) techniques like entity recognition
+and sentiment analysis can be integrated to improve the comprehension and handling of intricate
+mechanical problems and terminology. Furthermore, the study looks into how well machine learning
+algorithms work to improve the precision of predictive maintenance solutions. Using cutting-edge
+natural language processing (NLP) frameworks and technologies, the thesis attempts to create a more
+responsive and intuitive chat assistant that can identify and fix a variety of mechanical problems. The
+ultimate objective is to close the gap between operational effectiveness and technical proficiency by
+giving engineers and technicians a reliable tool. This project lays the groundwork for upcoming
+advancements in automated maintenance techniques in addition to adding to the body of knowledge
+regarding NLP and AI applications in industrial setting.
+6
+
+Chapter 1
+Introduction
+This section provides a summary and overview of natural language processing tools and machine
+learning. In recent years, there has been an increase in industrial interest in machine learning (ML)
+and artificial intelligence (AI) approaches due to their capacity to develop models that can handle the
+huge volumes of data created, which are increasing exponentially. Machine learning research has
+transitioned to increasingly complex models, such as ensemble approaches and deep learning (DL),
+due to their enhanced accuracy when applied to larger datasets. Since the publication of the research
+paper "Attention Is All You Need" and the emergence of artificial intelligence tools such as ChatGPT
+and Bard, natural language processing has demonstrated success in text generation, text classification,
+question-answering, and document summarization. Of these, question-answering has shown the most
+promise. By using this deep learning and language modelling knowledge, the mechanical system's
+downtime caused by equipment failures can be minimised. The use of NLP, or natural language
+processing, to provide predictive maintenance solutions for mechanical challenges is crucial in fixing
+mechanical issues by taking temporary actions. There is great hope that they will be equally effective
+after training (fine-tuning) the models with custom datasets. This section charts the development of
+ML models, starting with traditional methods like decision trees and linear regression. It talks about
+how conventional techniques are not as effective at handling enormous amounts of data and presents
+the idea of ensemble learning as a way to boost prediction accuracy.
+The emergence of deep learning architectures, driven by advancements in neural network science and
+transformer-based model construction, is then examined in this section. At this point, the emphasis is
+on the development of AI tools like ChatGPT and Bard, which have completely changed NLP jobs
+like text production and question-answering. An overview of transformer-based designs and their
+capacity to represent intricate language patterns is given in this section. It also talks about how these
+developments will affect industrial applications, especially those concerning predictive maintenance.
+The application of NLP to predictive maintenance in industrial environments is examined in this
+section. It talks about predicting maintenance needs and identifying possible failure patterns using
+textual data from service reports, equipment manuals, and maintenance logs. Additionally, it looks at
+how question-answering systems might help by offering real-time insights into mechanical problems
+and offering guidance.
+7
+
+The study highlights how crucial it is to fine-tune machine learning and natural language processing
+models using customised datasets suited to particular industrial settings. It talks about the drawbacks
+of using pre-trained models and the advantages of modifying them for use in circumstances that are
+peculiar to a given domain. It also emphasises how crucial it is to continuously validate and improve
+models to guarantee the best possible performance in predictive maintenance applications. The
+difficulties and potential paths for ML and NLP research in predictive maintenance are covered in this
+section. It covers topics including data privacy, interpretability of models, and scalability and suggests
+directions for future studies, such as developing hybrid ML-NLP techniques and integrating sensor
+data with textual data.
+8
+
+Chapter 2
+Objectives and Dataset Description
+2.1 Objectives
+The goals of this project are to use Natural Language Processing to identify the temporary measures
+that need to be taken to address the problem, extract insightful information, and identify patterns that
+can be used to create a sophisticated pipeline using Generative Artificial Intelligence modelling
+techniques on our custom dataset. Here, I would like to outline the objectives and provide a concise
+explanation of each.
+Find Temporary Solutions: The project uses natural language processing (NLP) to examine textual
+information from historical logs, service reports, and equipment maintenance in order to find
+temporary solutions for mechanical issues. The initiative intends to empower technicians and
+engineers to take quick action to minimise downtime and avoid additional damage to machinery by
+extracting actionable insights from textual input.
+Extrapolate Useful Information: The project's goal goes beyond figuring out workarounds to the
+problem of extracting useful information from textual data sources. This entails locating hidden
+correlations, trends, and patterns in maintenance records that human operators might not immediately
+see. Through the use of sophisticated natural language processing (NLP) techniques like sentiment
+analysis, topic modelling, and named entity identification, the project seeks to unearth important
+information that can guide decision-making and streamline maintenance procedures.
+Build a Complex Pipeline: The project's goal is to create a complex pipeline by modelling a bespoke
+dataset with generative artificial intelligence techniques. To automate several parts of predictive
+maintenance, such as determining maintenance needs and suggesting the best course of action for
+repairs, this pipeline will combine natural language processing (NLP) techniques with machine
+learning models. The project intends to improve the pipeline's capacity to produce human-like
+responses, enable natural language interactions, and adapt to changing maintenance issues by utilising
+generative AI models like ChatGPT and Bard.
+9
+
+Use Custom Dataset: Using a custom dataset designed to meet the unique requirements and
+difficulties of the industrial setting is a crucial component of the project. A variety of textual sources,
+such as maintenance logs, equipment manuals, sensor data, and historical records, will make up the
+dataset. The project's goal is to train and improve NLP and machine learning models to precisely
+detect trends, extract insights, and produce useful recommendations for predictive maintenance by
+curating and annotating this dataset.
+Improve Predictive Maintenance Strategies: In the end, the project aims to improve predictive
+maintenance strategies by utilising generative AI modelling approaches and natural language
+processing. The initiative intends to increase equipment reliability, decrease downtime, and streamline
+maintenance procedures by automating the interpretation of textual data. Furthermore, the project
+seeks to develop a comprehensive predictive maintenance framework that can adjust to changing
+operational conditions and optimise resource allocation by integrating insights from textual data with
+sensor data and other sources.
+2.2 Dataset Description
+The dataset used in this research is a hand-picked set of textual data that includes explanations of
+mechanical issues and suggestions for interim solutions. The dataset includes a wide range of
+mechanical difficulties, representing actual situations that technicians and engineers may face in
+various sectors. Apart from the manually selected corpus of textual information that includes
+justifications for mechanical problems and temporary fixes, the research process is strengthened by
+the addition of domain knowledge. This integration guarantees a more profound comprehension and
+contextualization of the mechanical challenges discussed in the dataset. Through the utilisation of
+first-hand experiences from technicians and engineers across multiple industries, the dataset replicates
+real-world circumstances, increasing its relevance and usefulness. Neural networks are powerful tools
+for analysing this kind of data, but they are not without difficulties. In light of this, the research
+project uses careful methods for cleaning and preparing data in order to guarantee the accuracy and
+consistency of the dataset. The dataset is cleaned up and then adjusted to include 11 columns of
+different traits and 572 rows of textual data, which makes it easier to analyse the underlying insights
+and trends in detail. A strong foundation for additional analysis and model building is laid by the
+distribution of values across each characteristic, which further clarifies the variety and scope of
+mechanical challenges contained in the dataset.
+10
+
+Figure. Picture inspecting Continuous Casting Machine (CCM)
+Figure 2: Downtime logs dataset
+11
+
+Chapter 3
+Methodology and Observations
+The dataset is the primary tool used to train, validate, and assess NLP models and advanced pipeline
+performance, beginning with LSTM models, in the context of producing short-term action
+recommendations for mechanical problem-solving. It is essential to the practical application and
+empirical validation of the research. The steps involved in creating an artificial intelligence
+application are shown in the image below. The Long Short-Term Memory (LSTM) models on this
+dataset are the first in line for training, validating, and evaluating the effectiveness of advanced
+pipelines and Natural Language Processing (NLP) models. These models play a critical role in
+producing immediate action recommendations that are specially designed to address mechanical
+problems. Researchers can refine algorithms to understand the nuances of textual data by utilising the
+dataset. This allows for the real-time production of actionable insights and recommendations.
+Furthermore, the dataset plays a crucial part in the empirical validation of the research findings in
+addition to being used for model training. By conducting thorough experiments and evaluating the
+results against the dataset, researchers may determine the effectiveness, precision, and applicability of
+the AI applications they have developed for mechanical problem-solving. The actions required Data
+preparation, model architecture design, training, validation, testing, and deployment are just a few of
+the phases that go into making an artificial intelligence application of this kind. Each step requires
+careful attention to detail and validation against the dataset. Through this iterative process, the AI
+application is guaranteed to fulfil and even surpass practical applicability and effectiveness standards
+when it comes to handling mechanical obstacles in the real world.
+Figure 1: Machine Learning/Artificial Intelligence pipeline
+12
+
+3.1 Data Preprocessing
+In applications involving natural language processing, data preprocessing is a crucial step in assessing
+the model's quality. Text cleaning, tokenization, uppercase and punctuation removal, lemmatization,
+and stemming are crucial data preprocessing procedures. The initial stage in getting the data ready for
+data-driven models is preprocessing. This calls for several methods, such as feature scaling, encoding,
+cleaning, and handling uneven data. Although these techniques are not exclusive to the subject at hand,
+the usual applications that are given serve as guidelines for their use with deep learning systems.
+Additional information regarding preprocessing techniques may be found in the study by Cernuda
+(Cernuda et al., 2019) on preprocessing for predictive maintenance. Data cleaning is necessary to
+acquire high-quality data. Imputation is a common method used in predictive maintenance operations
+to address missing values. These processes could involve handling outliers, interpolating or removing
+values, and confirming that the variables fall within the expected range. This procedure can be
+enhanced by introducing domain expertise. Neural networks are not without difficulties. The downtime
+logs dataset is made up of 11 columns of features and 1609 rows of textual data. We have 11 columns
+of characteristics and 572 rows of textual data after text cleaning. Apart from the previously described
+preprocessing methods, managing class imbalance is an essential component of preparing data for NLP
+applications, particularly in the context of classification tasks. When one class of data considerably
+outnumbers the other or classes, a class imbalance occurs and can cause biased model performance. To
+overcome this issue, approaches like cost-sensitive learning or ensemble methods—algorithms that are
+naturally robust to class imbalance—or oversampling and undersampling are frequently used.
+Figure: Text processing
+13
+
+Furthermore, by removing pertinent information from unprocessed text input, feature engineering is
+essential to improving model performance. Methods include TF-IDF (Term Frequency-Inverse
+Document Frequency), which gives weights to terms based on their frequency in a document compared
+to the complete corpus, and can offer insightful information about the textual material. Furthermore,
+time-series analysis approaches are essential when working with temporal data, such as in predictive
+maintenance scenarios. These include techniques for managing seasonality, trend analysis, and
+forecasting, all of which can offer insightful background for figuring out mechanical downtime
+patterns and enabling more precise forecasts.
+Lastly, evaluating and validating the model are important stages in determining how well NLP models
+perform. The performance of classification models is often measured using metrics like accuracy,
+precision, recall, F1-score, and area under the ROC curve (AUC-ROC), and methods like
+cross-validation assist guarantee the resilience and generalizability of the trained models. Researchers
+can create more reliable and accurate models by adding these extra factors into the data preparation
+and model development pipeline.
+3.2 Text Mining
+This phase includes extracting a relevant feature subset to feed models later on. The
+deep learning algorithms used in this study can automatically do feature engineering by
+choosing a subset of the generated features that are most appropriate for the task at
+hand, which will increase model performance. A common approach is to use feed-forward
+algorithms to add deep layers with fewer dimensions.
+To improve the performance and interpretability of their models, researchers can use human feature
+selection strategies in addition to the automatic feature engineering capabilities provided by deep
+learning algorithms. By locating and keeping only the most pertinent features from the dataset, manual
+feature selection helps to minimise dimensionality and possibly even prevent overfitting problems.
+Additionally, feature importance ranking techniques like permutation importance or SHAP (SHapley
+Additive exPlanations) and feature selection techniques like Recursive Feature Elimination (RFE),
+which recursively removes the least significant features based on model performance, can offer
+insightful information about the significance of various features in predicting mechanical issues.
+Furthermore, domain-specific expertise can help choose pertinent traits because they may know which
+characteristics are most suggestive of upcoming mechanical breakdowns. Furthermore, dimensionality
+14
+
+reduction methods like Principal Component Analysis (PCA) and t-distributed Stochastic
+neighbourhood Embedding (t-SNE) can be used to visualise and explore high-dimensional data in
+lower-dimensional environments. Through the integration of both manual and automatic feature
+selection methods and the use of domain expertise, researchers are able to enhance the quality of the
+feature subset fed into deep learning models, leading to better model interpretability and performance
+when applied to mechanical problem-solving tasks.
+3.3 N-Grams
+N-grams are contiguous sets of N items (typically words, characters, or symbols) extracted from a
+longer text or audio clip. These are fundamental concepts in natural language processing (NLP) and
+computational linguistics. Because they may be used to assess and comprehend the relationships and
+patterns between components in a sequence, N-grams are helpful for many different types of natural
+language processing applications. The number of items in each sequence is indicated by the letter "N"
+in N-grams. N-grams can capture local context and patterns in text data, but they have limitations,
+particularly when trying to understand the broader semantics of text and handling
+longer-range dependencies. For solving comparable issues, more advanced NLP techniques like
+transformer models and neural networks have grown in prominence. N-grams are useful for capturing
+patterns and local context, and they are also the basis for a number of NLP tasks, such as sentiment
+analysis, text classification, and language modelling. They make it possible for models to deduce
+associations between neighbouring words or characters and learn from the sequential structure of
+language.
+N-grams can also be used to solve particular NLP problems, like recognising grammatical structures,
+anticipating the next word in a sequence (which is crucial for language production and completion
+tasks), and finding collocations (words that commonly appear together). N-grams are not without
+limitations, though, especially when it comes to collecting semantic subtleties in text data and
+managing longer-range dependencies. The number of distinct possibilities increases exponentially with
+N-gram size, causing sparsity problems and greater computational complexity. complexity.
+Furthermore, N-grams might not be able to convey non-contiguous word relationships or the text's
+overall meaning.
+15
+
+Figure: N-gram sequences
+More sophisticated NLP techniques, like transformer models like BERT (Bidirectional Encoder
+Representations from Transformers) and GPT (Generative Pre-trained Transformer), have been
+developed to get around these restrictions. These models use self-attention mechanisms to capture both
+local and global dependencies in text data. These models are excellent at comprehending long-range
+dependencies, context, and semantics, which makes them suitable for a variety of natural language
+processing (NLP) tasks, such as language translation and text classification.
+We utilise the preceding N-1 words to forecast the Nth word when predicting the following word in a
+phrase. utilising trigrams, we could guess the following word in a sentence like "The quick brown fox"
+by utilising the word "quick brown". Variations of this idea are used by contemporary text generation
+models such as GPT (Generative Pre-trained Transformer), but they are far more sophisticated and
+sophisticated. To comprehend and produce text, they employ deep learning approaches rather than
+merely depending on N-grams.
+Here, a "downtime issue" is handled by using the trained model to respond to customer inquiries on
+certain mechanical issues or system failures. The model can comprehend and react to user inquiries
+about downtime situations since it was trained on a dataset that included written explanations of
+mechanical problems and temporary fixes. Through examination of the user's query and contrast with
+the patterns and insights acquired throughout training, the model is able to produce pertinent and useful
+suggestions that are specifically suited to the matter at hand. By offering prompt solutions to downtime
+problems, this real-time help improves operational efficiency by reducing disruptions and promoting
+the smoother operation of machinery and systems.
+16
+
+3.4 Creation of Embeddings
+In the context of natural language processing (NLP) and machine learning, embeddings are vector
+representations of words or objects in a continuous vector space. These representations, which capture
+the syntactic and semantic links between words, are learned from vast amounts of data. Specifically,
+word embeddings have transformed natural language processing (NLP) problems by allowing models
+to operate with distributed word representations instead of sparse, semantically empty one-hot encoded
+vectors. A key idea in natural language processing (NLP), embeddings have significantly enhanced
+machine learning models' capacity to process text data and hence improve their capacity to
+comprehend and reason about language. The mechanical system's downtime logs are represented
+densely in the figure below, which was created using Word2Vec.
+Apart from Word2Vec, GloVe (Global Vectors for Word Representation) is another well-liked word
+embedding method that uses global word co-occurrence data to learn word embeddings. GloVe utilises
+the complete corpus to derive word embeddings, capturing both local and global semantics, in contrast
+to Word2Vec, which concentrates on local context.
+Figure 5: Word2Vec model representation of issues from downtime logs dataset
+17
+
+Furthermore, word embeddings can be optimised for certain downstream tasks by fine-tuning them
+during the training of bigger NLP models, including BERT (Bidirectional Encoder Representations
+from Transformers) and GPT (Generative Pre-trained Transformer). Through this process of
+fine-tuning, the model gains the ability to understand subtleties unique to a certain task and performs
+better on tasks like sentiment analysis, named entity identification, and text categorization.
+Moreover, embeddings are not exclusive to words; they can be used with different kinds of items, such
+as sentences, documents, or even whole paragraphs. These embeddings—also called sentence
+embeddings or document embeddings-allow models to comprehend the content and context of longer
+textual units, which makes tasks like summarization, document classification, and similarity
+identification easier. Furthermore, pre-trained embeddings from large corpora can be leveraged and
+refined on domain-specific datasets through techniques like transfer learning and domain adaptation.
+This improves the performance of NLP models in specialised domains like predictive maintenance or
+mechanical engineering. Increased comprehension, reasoning, and performance in a variety of
+language processing tasks can be attained by NLP models through the use of word embeddings and
+their extension to other forms of textual data.
+18
+
+Chapter 4
+Long Short-Term Memory
+The application of recurrent neural networks (RNNs) is examined in this chapter. The goal of Long
+Short-Term Memory (LSTM) recurrent neural network (RNN) designs is to address the vanishing
+gradient problem in traditional RNNs. LSTMs are more effective for time series and sequential data
+analysis than RNNs. They have been widely used in numerous applications, including natural language
+processing (NLP) and speech recognition. Because of the bidirectional processing, a unidirectional
+LSTM could overlook dependencies and patterns in the input data that the model can recognise.
+The following are some benefits of employing a BiLSTM:
+Obtaining reciprocal context: A BiLSTM can capture relationships that rely on both historical and
+prospective data by processing data in both directions. Enhanced performance: BiLSTMs perform
+better than unidirectional LSTMs in jobs where comprehending the sequence's context is necessary.
+Sturdy feature extraction: More insightful features for jobs farther down the line can be obtained by
+combining the representations from both directions.
+Figure 6: Implementation of Bi-Directional LSTM model in Python
+19
+
+Figure: LSTM Architecture
+For text generation, we initially use a sequential neural network model with a custom embedding layer,
+and then we use a Bidirectional LSTM (Bi-LSTM). Our model's embedding layer creates word
+representations from start using the particular dataset you provided. The Bi-LSTM part provides a
+thorough grasp of context by processing text both forward and backward. This configuration makes
+use of the contextual awareness of BiDirectional-LSTM and the advantages of custom-tailored
+embeddings to effectively anticipate the following word in a sequence.
+Apart from the Bidirectional LSTM (Bi-LSTM) and sequential neural network model with a specific
+embedding layer, other methods like attention mechanisms can improve the text creation process even
+more. By assigning greater weight to particular words or phrases that are judged more crucial for
+producing the following word in the sequence, attention mechanisms enable the model to concentrate
+on pertinent portions of the input sequence. The model's capacity to recognise long-range dependencies
+and contextual subtleties in the text data may be enhanced by this attention-based method. Moreover,
+ensembling methods, like merging several models trained with various hyperparameters or
+architectures, might enhance the text generation model's resilience and generalizability. Compiling
+predictions from various models can minimise overfitting and improve the overall effectiveness of the
+system for generating text.
+20
+
+Additionally, methods like nucleus sampling and beam search can be used during the generation stage
+to provide more coherent and diverse text outputs. While nucleus sampling dynamically modifies the
+probability distribution of candidate words to ensure diversity while preserving coherence in the
+resulting text, beam search investigates several potential word sequences and chooses the most likely
+ones based on a scoring algorithm. Furthermore, the relevance and quality of the generated text can be
+further enhanced by fine-tuning the model on domain-specific data or incorporating domain expertise
+into the training process, particularly in specialised fields like predictive maintenance or mechanical
+engineering.
+4.1 Observations of Bidirectional-LSTM Intelligent System Model
+First, a bespoke dataset was used to train a Bi-LSTM model to recognise and categorise different types
+of outages. This model was created to respond to user inquiries regarding certain outage problems and
+then offer a selection of possible issue descriptions that correspond with the question. After that, the
+user was asked to choose the description that most closely suited their circumstances. The problem at
+hand might be identified more precisely and with greater focus thanks to this selection process. The
+model then matched the issue description to a matching solution after getting the user's input on it. This
+mapping was an essential component of the project since it made it possible to provide pertinent and
+useful answers to the issues that were found. This project's outcomes were encouraging. The Bi-LSTM
+model exhibited a high degree of proficiency in comprehending the subtleties and context of customer
+inquiries.
+It expedited the process of determining the accurate downtime issue by effectively classifying and
+matching these searches to the most pertinent issue descriptions. The Bi-LSTM model has been
+successfully used to identify and classify various outage types. However, the model's performance may
+have been further improved by using post-processing techniques like error analysis and model refining.
+Examining misclassifications or inaccuracies produced by the model in order to spot patterns or trends
+that might guide changes to the model architecture or training set is known as error analysis.
+21
+
+Moreover, the Bi-LSTM model may have been adjusted for better accuracy and generalisation using
+methods like regularisation, optimisation algorithms, and hyperparameter tuning. Hyperparameter
+tuning is the process of fine-tuning variables like batch size, dropout rate, and learning rate in order to
+maximise the model's performance on validation data. By penalising large weights, regularisation
+approaches such as L1 or L2 regularisation can prevent overfitting. While training process
+convergence can be accelerated by optimisation techniques like Adam or RMSprop.
+Additionally, model interpretability approaches might have been used to improve confidence and
+transparency in the Bi-LSTM model's outputs and provide insights into the model's decision-making
+process. By highlighting the segments of the input sequence that have the most impact on the model's
+predictions, techniques like saliency mapping and attention visualisation can shed light on the inner
+workings of the model. Furthermore, the Bi-LSTM model's scalability and deployment for practical
+applications might have been taken into account, along with optimisation for memory efficiency and
+inference speed to guarantee effective functioning in production settings. The model's capacity to map
+these problems to suitable solutions further demonstrated its value as a useful instrument for
+problem-solving in certain operational contexts.
+Figure 7: Working Bi-Directional LSTM Model
+22
+
+The conversation and working of chat model version of Bi-Directional LSTM is given below:
+Start messaging with the bot (type quit to stop)!
+User: I need assistance
+1/1 [==============================] - 2s 2s/step
+ChatBot: Have a nice day
+User: issues related to a down time issue water leakage from spt side
+1/1 [==============================] - 0s 22ms/step
+ChatBot: 1. spt seal got damage as metal got inside resulting in huge water leakage
+2. huge water leakage from spt taper plate gap in bottom
+3. water leakage from taper 'o' ring rubber cord
+4. water leakage from spt seal due to mould vibration
+5. water leakage from spt seal
+6. mould vibration + water leakage from spt seal
+7. water leakage from taper plate o ring
+8. spt seal water leakage due to seal metal contact
+9. spigot seal water leakage
+10. water leakage from spigot side as metal got inside and damaged seal
+11. water leakage from spigot side due to metal pouring
+12. water leakage from spigot mould seal
+ChatBot: Please select one of these issues to find the respective solution needed.
+User: 4
+ChatBot: The solution is sleeve was changed
+23
+
+The user contacts support over an industrial equipment water leak that is causing downtime. The user
+chooses issue number 20 from the ChatBot's list of possible problems, which deals with water leaking
+caused by v-seal breakage in the head bearing. To resolve the mentioned problem, the ChatBot
+suggests changing the sleeve.
+It's important to check the surrounding components for wear or damage in addition to proposing
+replacing the sleeve to fix the v-seal breakdown in the head bearing. To guarantee optimum
+performance and avert further problems, careful inspection of the shaft alignment, bearings, and seals
+should be done during the replacement procedure. In order to ensure that the bearings receive enough
+oil, it's also a good idea to inspect the lubrication system. This will help the bearings last longer and
+lessen the possibility that similar leaks will happen again. Lastly, putting in place routine maintenance
+plans and monitoring systems can help identify possible issues early on, enabling quick fixes and
+reducing downtime.
+24
+
+Chapter 5
+Generative Artificial Intelligence using LSTM
+In this phase, the n-grams approach is used to generate the subsequent tokens. Tokens are often
+generated in two ways: 1. Prediction of the next token and 2. Token generation with masks. Here,
+we've looked at the initial approach of creating the next token utilising a series of tokens produced by
+the n-gram text mining technique. LSTM networks and generative artificial intelligence overview: The
+idea of generative artificial intelligence, which entails producing new information that is comparable to
+preexisting data, is briefly introduced in this section. We describe LSTM networks, as a kind of
+recurrent neural network (RNN) that can capture long-term dependencies and is hence especially
+well-suited for sequence modelling problems. The n-gram approach, which divides text into
+continuous sequences of n elements (usually words or characters), is explained in this article. Text
+creation and language modelling are two applications of n-grams in natural language processing.
+A succinct introduction to LSTM architecture is given in this section, which emphasises the networks'
+distinctive structure of gates that control information flow over time. We go over the benefits of LSTM
+networks, including how they can capture long-range dependencies and lessen the effects of the
+vanishing gradient problem.
+Figure: Tokenization and Embedding Layer
+25
+
+The training process of LSTM networks is discussed: This study describes how backpropagation
+through time (BPTT) and other approaches are used to train LSTM networks on token sequences. It
+highlights how crucial sequential input is to LSTM network training for generative applications. An
+explanation of the n-gram technique is provided in this section. It explains how text is divided into
+sequences of consecutive elements (words, letters, etc.) with a length of n. The paper talks about the
+many kinds of n-grams (such bigrams, trigrams, and unigrams) and how they can be used to represent
+local context in text data.
+Next token prediction: Based on the tokens that came before it, this section describes how LSTM
+networks anticipate the token that will come after it in a sequence. It talks about how to train the
+network to produce probabilities for the subsequent token based on the background information given
+by the preceding tokens.
+Figure: Example of Next token prediction
+Token production with masks: This section of the study presents the idea of token creation with
+masks, which generate certain tokens by pre-established patterns or criteria. It looks at how masks may
+be used to regulate the generating process and guarantee that tokens are produced within
+predetermined bounds.
+Figure: Example of masked token prediction
+26
+
+Synopsis of the execution: This section describes the implementation of LSTM networks for token
+creation using the n-gram technique. It might contain details about model design, training protocols,
+validation methods, and data preprocessing.
+Training and hyperparameters: The choice of training strategies (e.g., early halting, gradient
+clipping) and hyperparameters (e.g., learning rate, batch size) used during the implementation process
+are covered in the report.
+5.1 Observations of Generative AI using LSTM
+Because the LSTM model in question was trained on a tiny dataset, the results display considerable
+hallucinations and lack precision, even though they partially address the query. The question focuses
+on solving water leakage problems from the SPT side, which is a specialised and technical area.
+Problems Recognised:
+Restricted Dataset: The model's comprehension and capacity to produce precise answers for
+specialised technical queries are restricted by the short dataset it was trained on.
+Model Hallucinations: When responses contain stuff that seems hallucinatory, there is a disconnect
+between the model's comprehension and contextual foundation.
+Requirement for Specialised Knowledge: The model needs access to specialised, domain-specific
+information due to the technical nature of the questions.
+Suggested Remedies:
+Dataset Expansion: It is advised to add more technical papers, manuals, and case studies about water
+leaks and their fixes to the training dataset in order to improve the model's comprehension and lessen
+hallucinations.
+Fine-Tuning on Specific Data: By increasing the LSTM model's familiarity with pertinent vocabulary
+and solution types, fine-tuning it on a dataset that is closely connected to water leaking in industrial
+settings could greatly increase its performance.
+27
+
+Integration with External Knowledge Bases: In order to give the required context and information
+grounding for highly specialised questions, the model can be integrated with external knowledge bases
+that contain precise and comprehensive information on water leakage solutions.
+Retrieval-Augmented Generation: By obtaining pertinent documents or data points, utilising a
+retrieval-augmented technique can assist in providing reliable information to support the model's
+responses.
+Post-Processing and Validation: One way to lessen the impact of hallucinations is to implement a
+post-processing step that verifies the generated responses for correctness and relevancy. For crucial
+applications, this can entail manual review or even automated rule-based inspections.
+Experimentation with More Advanced Models: Given the shortcomings of LSTM models in
+answering such specialised queries, it is advised to try out more sophisticated models such as
+Transformers (e.g., GPT-3 for generation, BERT for retrieval tasks). These models do better at
+producing intelligible text, recognising context, and lessening hallucinations.
+Frequent Updates and Monitoring: The model's efficacy can be sustained over time by regularly
+updating the training dataset with new, pertinent data and keeping an eye on how the model performs.
+Below is an example of Generative Artificial Intelligence using LSTM.
+Question: What Are The Solutions To Resolve The Issue of Water Leakage From the Spt Side?
+Solution: A Seal Plate Melted At the Bottom. The Solution To Resolve The Issue Water Leakage From
+V Seal Sl 2 Hb 1 Is Are Sleeve Removed Sleeve Inserted After Making It Ready Sleeve Changed With
+Not 600 So V Belt Replaced And Spt Seal Changed 3 Water Leakage Arrested By Scaling Out Metal
+From Spt Seal 4 At Spt Side Extra Dummy Seal Provided In It 4 Mould Rotation And And Spt Side
+Rail And Spt Mould Seal And Spt Seal Wa Changed And Spt Side All Mould Supporting Roller Were
+Changed And Spt Side All Mould Supporting Roller Were Changed
+28
+
+Chapter 6
+Fine-Tuning Large Language Models
+With a particular focus on the Llama-2 7B parameter model, this chapter examines the difficulties and
+solutions associated with training big language models. Due to the short size of the dataset, the
+research first used the Parameter Efficient Fine-Tuning (PEFT) technique with the QLORA
+optimisation. This approach had limitations. The research then switched to a Retrieval Augmented
+Generation (RAG) strategy, which makes use of semantic similarity to improve quick generation and
+information retrieval. This change resulted in a notable improvement in the model's performance and
+demonstrated the superiority of RAG over conventional fine-tuning techniques when dealing with
+small knowledge bases. Natural language processing has been transformed by large language models
+such as GPT and Llama-2, which have never before been able to produce human-like text. However,
+the calibre and volume of the training dataset have a significant impact on their performance. To
+explore training the Llama-2 7B parameter model, this thesis study first used the PEFT technique,
+with a focus on QLORA for optimisation. PEFT was selected to effectively refine the model's
+parameters while taking the size of the dataset and computational resource limitations into account.
+Figure: Pre-trained vs Fine tuning model
+29
+
+To modify the model's parameters while maintaining the efficiency of the original architecture, the
+PEFT technique was first applied, with a particular emphasis on QLORA. The method's theoretical
+benefits notwithstanding, the reduced dataset size hindered the model's ability to learn and adapt,
+leading to less-than-ideal practical results.
+Figure 1: Fine-tuning process of LLMs
+Acknowledging that fine-tuning was not feasible in situations where the knowledge base was
+intrinsically limited, the team switched to an approach called Retrieval Augmented Generation. Using
+semantic similarity, RAG distinguishes itself by dynamically adding pertinent data to the model's
+input that is retrieved from a larger dataset. By doing this, the problem of a small dataset is not only
+resolved but the model's capacity to produce more precise and contextually appropriate responses is
+also improved.
+6.1 PEFT Technique
+The Parameter Efficient Fine Tuning (PEFT) methodology aims to maximise machine learning model
+performance through effective parameter fine-tuning. Extensive searches over vast parameter spaces
+are a common component of traditional fine-tuning techniques, which can be costly computationally
+and resource-wise.
+To overcome this difficulty, PEFT uses regularisation and gradient-based optimisation to expedite the
+fine-tuning procedure while preserving or enhancing model performance.
+30
+
+Figure 2: Working of Low-Rank Adaptation Technique
+Figure 3: Low-Rank Adaptation Technique
+Among PEFT's salient features are:
+Efficiency: PEFT seeks to minimise training data and computational resources while achieving
+optimal model performance.
+Parameter Optimization: PEFT lowers the chance of overfitting and enhances generalisation
+abilities by concentrating on optimising only the most important parameters.
+Scalability: PEFT can be used in a wide range of machine learning applications since it can be
+applied to different machine learning architectures and domains.
+31
+
+Quantized Low-Rank Adaptation, or QLORA, is an approach that uses quantized low-rank
+representations to adaptively alter model complexity, serving as a supplement to PEFT. This method
+achieves effective parameter adaptation while preserving or enhancing model performance by taking
+advantage of the inherent structure and redundancy seen in many machine learning models. When
+combined with the Quantized Low Rank Adaptation (QLORA) technique, the Parameter Efficient
+Fine Tuning (PEFT) method is a novel approach in the field of artificial intelligence and machine
+learning. A framework for adaptively altering model complexity using quantized low-rank
+representations is provided by QLORA, whereas PEFT concentrates on improving model
+performance through effective parameter fine-tuning.
+6.2 LLaMA - 2 Model fine tuning
+Figure: LLaMA-2 model architecture
+32
+
+In the natural language processing (NLP) field, fine-tuning pre-trained models such as LLaMA-2 has
+become essential for creating applications that are suited to particular tasks or domains. First in this
+complex procedure, the right version of the LLaMA-2 model must be chosen, depending on how well
+required performance is balanced with available processing power. Just as important is preparing the
+dataset for the task at hand, which calls for careful cleaning, suitable formatting, and a thoughtful
+separation into training, validation, and test sets.
+This careful planning guarantees that the fine-tuning process is set up for the best possible model
+adaption to the subtleties and complexity of the particular task. The foundation of the fine-tuning
+procedure is the establishment of a supportive computing environment. This configuration includes
+both the hardware—GPUs or TPUs to speed up training—and the software, which includes necessary
+LLaMA-2-compatible libraries and frameworks. After setting up the environment, the model itself
+needs to be fine-tuned. Loading the previously trained model, maybe modifying its architecture, and
+modifying training parameters like learning rate, batch size, and epochs are what define this phase.
+The aim is to carefully train the model using the prepared dataset, modifying the model's weights
+iteratively to reduce loss and improve performance on the given task.
+Iteratively fine-tuning LLaMA-2 requires ongoing observation and modification depending on
+performance indicators extracted from the validation set. In order to further enhance the model, it
+might be necessary to revisit the training settings, add new data, or use optimisation techniques like
+quantization or pruning. In order to ensure that the fine-tuned model strikes the ideal balance between
+accuracy and efficiency, this iterative refinement is essential for matching the model's capabilities
+with the complex requirements of the task. Large language models (LLMs) such as LLaMA-2 can
+perform better and more efficiently thanks to a novel technique called QLORA (Quantized Low
+Rank). This technique cleverly addresses the computational and memory limitations that are
+frequently experienced while deploying advanced AI models, especially in contexts with restricted
+resources. It does this by combining quantization and low-rank approximation.
+As a component of the QLORA method, quantization entails decreasing the numerical parameters of
+the model's precision (e.g., changing from 32-bit floating-point to 8-bit integers). By doing this, the
+model's size and the amount of computational power required for inference are drastically reduced,
+allowing for shorter processing times and greater compatibility with a larger variety of
+devices—including ones with little processing power. QLORA's low-rank approximation feature
+breaks down the weight matrices of the model into smaller, easier-to-manage matrices, which further
+improves model efficiency.
+33
+
+By reducing the amount of parameters the model must compute and store, this approximation lowers
+computational complexity and memory usage without significantly affecting the model's performance.
+In actual use, QLORA is especially helpful for applications that need to install potent LLMs on edge
+devices or in situations where there are limited computational resources. As an example,
+QLORA-optimized models can be used by wearable technology, mobile applications, and Internet of
+Things devices to execute complicated natural language processing tasks in real time, without
+requiring continuous connectivity to cloud-based computational resources. This increases the usability
+and accessibility of complex AI functions for a wide range of applications, including powerful edge
+text analysis tools and voice-activated assistants, as well as real-time language translation. All things
+considered, the QLORA approach is a major breakthrough in AI that makes it possible to deploy very
+capable LLMs in a way that is more effective, scalable, and easily accessible. QLORA expands the
+possibilities for incorporating sophisticated NLP features into a wider range of gadgets and
+applications by tackling the dual problems of computational and memory efficiency. This allows AI
+technology to be used in more practical ways.
+Figure: Code snippet of Fine-tuning of LLaMA-2 Model
+Important facets of QLORA comprise:
+Model Compression: By quantizing the parameters of machine learning models into low-rank
+representations, QLORA makes the process easier. By doing this, the models become more effective
+for deployment on devices with limited resources by lowering their memory footprint and processing
+overhead.
+34
+
+Adaptive Complexity: QLORA dynamically modifies machine learning model complexity in
+response to computing limitations and input data properties. This eliminates the need for manual
+adjustment and guarantees excellent performance under a variety of operating circumstances.
+Generalisation: QLORA enhances machine learning models' capacity to generalise by encouraging
+sparsity and regularisation, which helps avert overfitting.
+Combining PEFT with QLORA is a synergistic method for machine learning model adaption and
+optimisation. This method gives a strong framework for creating high-performance machine learning
+models that are resource-efficient and flexible enough to work in a variety of operating environments.
+It does this by fusing the effectiveness of parameter fine-tuning with the adaptability of quantized
+low-rank representations.
+6.3 Observations of Fine-Tuning of LLM
+The PEFT methodology, when combined with QLORA, is a major breakthrough in machine learning
+techniques that provides adaptive complexity adjustment and effective parameter fine-tuning.
+Through the utilisation of these methodologies, scholars and professionals can create machine
+learning models that maximise efficiency while reducing resource needs and preserving flexibility in
+diverse settings.
+Fine-tuning methods like QLORA and PEFT can be less effective when dealing with small datasets,
+especially in the context of machine learning. Here's a quick comment on it:
+Small Dataset Challenges:
+Limited Information: Insufficient data for model training and fine-tuning may result from small
+datasets' inability to fully represent the complexity and variability of the underlying issue area.
+Risk of Overfitting: A smaller sample size increases the likelihood of overfitting, a condition in
+which the model becomes more adept at memorization of the training set than at generalising to new
+examples.
+Parameter Sensitivity: Model parameters are frequently changed in response to data distributions in
+order to fine-tune methods such as QLORA and PEFT. These modifications might not be strong or
+dependable with a limited dataset, which would result in less than ideal performance.
+Implications for PEFT and QLORA:
+35
+
+Limited Parameter Optimisation: In order to properly fine-tune model parameters, QLORA and
+PEFT approaches require a substantial amount of data. There might not be enough varied examples in
+a short dataset to sufficiently direct the optimisation process.
+Adaptation Challenges: When working with fewer data points, PEFT's parameter tweaking and
+QLORA's adaptive complexity adjustment may not be able to maximise model performance. Their
+capacity to adequately capture underlying patterns and adjust to varying input distributions is
+hampered by the lack of diversity in the data.
+Strategies for Mitigation:
+Data augmentation: By adding artificial or modified instances to the tiny dataset, its size and
+diversity can be increased and more information can be obtained for fine-tuning methods.
+Regularisation: By placing restrictions on model parameters during the regularisation process,
+regularisation techniques like weight decay and dropout can assist reduce overfitting.
+Transfer Learning: Because pre-trained models have previously learnt generic features from a vast
+amount of data, using them on larger datasets and fine-tuning them on the smaller dataset can be more
+effective than training from scratch.
+In conclusion, the efficacy of fine-tuning methods such as QLORA and PEFT may be restricted in
+small dataset scenarios because of insufficient data for parameter adaption and optimisation. Although
+these methods provide strong tools for optimising models, their full potential cannot be realised
+without sufficient data numbers and diversity. To overcome these restrictions and enhance model
+performance, it's critical to be aware of dataset size limitations and investigate other tactics like data
+augmentation and regularisation.
+36
+
+Chapter 7
+Retrieval Augmented Generation
+Retrieval-augmented creation (RAG) is a technique that improves text or response creation based on a
+vast corpus of information by combining the strengths of generative models and retrieval methods. It is
+especially helpful for natural language processing (NLP) applications such as content production,
+chatbots, and question-answering. The retrieval and generation phases are the two main processes in
+the process. Let's dissect each step:
+Figure: Retrieval Augmented Generation
+Below is an outline of each step followed in the Retrieval Augmented Generation pipeline.
+1. Retrieval
+Step 1: The system looks for pertinent information by first searching a sizable dataset or document
+collection in response to an input query (such as a question or prompt). This dataset could be any
+sizable corpus of text, a series of documents, or an organised database.
+37
+
+Step 2: To quickly identify the material that is most relevant to the user, the retrieval mechanism
+frequently employs methods like vector embeddings and similarity measures that effectively find the
+information most relevant to the input query by combining the power of retrieval. This could entail
+employing pre-trained embeddings from models like BERT, or more complex neural network-based
+algorithms like TF-IDF and BM25.
+2. Augmentation
+Step 3: To create an expanded input, the initial query is integrated or enhanced with the content that
+was retrieved. Through this procedure, the generative model is guaranteed access to the pertinent data
+that was obtained in the preceding stage as well as the query's context.
+3. Generation
+Step 4: Using this enriched input, a generative model—typically a big language model like GPT
+(Generative Pre-trained Transformer)—creates an output text. In order to generate responses that are
+more knowledgeable, precise, and pertinent, the generative model makes use of the extra context that
+the retrieval step provides.
+Step 5: If more refinement or post-processing is required, the output can be applied. This could be
+modifying the response's tone or style or making sure it appropriately responds to the intent of the
+input question.
+Example: "What are the benefits of retrieval-augmented generation models?" is the input query.
+Retrieval: Looks through a knowledge repository for papers, articles, and other materials that address
+RAG models, their applications, and advantages.
+Generation: Using the enhanced input, a model such as GPT-3 creates a comprehensive,
+well-informed response that highlights the advantages of RAG models, including increased response
+generation accuracy, efficiency in managing large amounts of data, and task-specific adaptability.
+Output: A thorough response that makes use of both the information that was retrieved and the user's
+query.
+38
+
+Figure: RAG pipeline using LLaMa-2 model
+RAG models fill the gap between retrieval-based models, which might not produce fluid, coherent
+responses, and simply generative models, which might lack specific knowledge or context. The
+combination of RAG models outperforms other models in a variety of NLP tasks, thanks to their
+combined strengths.
+Building applications at the nexus of language models and chain of reasoning is the goal of the
+LangChain library. Large language models, such as OpenAI's GPT, can be more easily integrated
+into applications that need for intricate reasoning, conversational flows, or decision-making processes
+thanks to this Python module. It encourages the creation of systems that can synthesise text replies that
+resemble those of a human, access information, and solve issues. LangChain facilitates the
+implementation and management of tactics that include guiding a model through a sequence of
+reasoning processes in order to arrive at a conclusion or solution. This approach offers instruments for
+incorporating retrieval mechanisms into generative models, thereby augmenting the model's capacity to
+extract pertinent data from outside sources during the generation process. The library is designed to be
+modular, enabling developers to plug in various components for generation, retrieval, and reasoning
+according to their particular requirements.
+39
+
+Figure: Langchain and Rag Pipeline
+LangChain is made to be model-agnostic, supporting a variety of language models that are available on
+the market, even though it can interact nicely with OpenAI's models. The results and observations of
+this section are provided in the next chapter with the help of a web application. The interaction
+between the user and chatbot is presented in the next chapter using the Langchain library and Retrieval
+generation.
+40
+
+Chapter 8
+Web Application
+The web application is constructed using a strong stack that includes Streamlit and FastAPI. It also
+integrates sophisticated features via the LangChain library for retrieval-augmented generation. This
+configuration enables a smooth fusion of state-of-the-art AI-driven content production and
+augmentation, effective backend services via FastAPI, and front-end interactivity supplied by
+Streamlit.
+Streamlit: This part acts as your application's front-end interface. Python programmers may easily
+create interactive web apps using Streamlit because of its user-friendly interface. It probably manages
+user input, data visualisation, and user presentation of the AI-generated content in your app.
+FastAPI: FastAPI is used as the backend framework, managing application logic and HTTP requests,
+and acting as a link between the Streamlit front end and the AI features enabled with LangChain
+power. It is selected because of its excellent performance and simplicity of use while developing
+scalable and asynchronous APIs.
+LangChain: The LangChain library lies at the heart of what makes your application special. With the
+help of this retrieval-augmented generation library, your application may produce content that is not
+only cohesive and pertinent, but also enhanced by obtaining and utilising outside data. By providing
+thorough, contextually relevant answers to user concerns, this could improve the relationship and make
+it more interesting and educational.
+41
+
+Figure: Web application architecture
+Flow of User Interaction:
+User Query Submission: Using the Streamlit interface, users first enter their requests or questions.
+This could include enquiring about information, making requests, or engaging in any other type of
+interaction that your app is intended to support.
+Processing and Generation of Augmented Retrieval: After that, the query is sent to FastAPI, the
+backend, so it can communicate with the LangChain library.
+42
+
+Here, the inquiry is processed, and wherein the system obtains pertinent external data and produces a
+response that is enhanced by this data. This stage makes sure that the responses are dynamically
+enhanced with the most recent and pertinent data, in addition to being prepared using a fixed dataset.
+Response Presentation: After being transmitted back to the Streamlit application, the augmented
+response is shown to the user in a visually appealing manner. This could be any format appropriate for
+the created content, such as text, links, or visualisations.
+The below pictures give an overview of a working Web application developed using streamlit,
+langchain libraries, and the llama-2 model for question answering system.
+Figure: Web application user interface
+43
+
+44
+
+Chapter 9
+Conclusion
+The initiative did, however, also come with some difficulties. The calibre and size of the dataset
+utilised for training has a significant impact on the calibre of the model's predictions and solutions. It
+was crucial to make sure the dataset was extensive and representative of a variety of potential
+problems. Furthermore, the model needed to be adjusted to correctly understand and react to the
+various ways that users could express similar difficulties.
+In conclusion, our study demonstrated how well a Bi-LSTM model combined with NLP can be used
+to identify and resolve downtime issues. The model represents a major advancement in automated
+problem-solving due to its capacity to understand natural language inquiries and offer customised
+responses. It did, however, also draw attention to the necessity of extensive and varied training data
+and continuous model optimisation to meet the challenges of natural language interpretation in
+real-world applications. Most industrial firms that rely on corrective and periodic maintenance
+procedures can optimise maintenance costs by utilising autonomous data-driven predictive
+maintenance models. Research on these models has moved beyond statistics to more advanced
+machine learning techniques, tracking the states of the system and its parts. profound understanding
+Right now, models are the main focus of research. The major objective of this survey was to
+investigate the use of state-of-the-art deep learning methods in the maintenance sector. The steps
+needed to complete the modelling process were described methodologically. A notable advancement
+in the application of AI to specialised fields is the creation and implementation of a mechanical
+question-answering system that makes advantage of retrieval-augmented generation's (RAG)
+sophisticated capabilities. Through the combination of large language models' (LLMs) substantial
+prior knowledge and a small, targeted dataset, this system is fine-tuned to deliver prompt, useful
+guidance for solving mechanical difficulties. It is crucial that retrieval-augmented generation be used
+as the main technique in this application. It blends the broad, contextual understanding found in
+LLMs with the depth and specificity of a carefully selected dataset on mechanical challenges, giving
+the best of both worlds. Because of this cooperation, the system may provide users with rapid access
+to customised, contextually relevant answers in addition to general advice.
+45
+
+Moreover, the design of the system, which emphasises mechanical troubleshooting, highlights the
+potential of artificial intelligence to make a significant contribution to specialised but crucial fields.
+In addition to being a useful tool for mechanical professionals and fans, the programme also
+demonstrates how AI can be applied practically to improve domain-specific knowledge and support
+by giving users quick, practical solutions to avoid or resolve mechanical concerns.
+To sum up, this Q&A system is evidence of the creative application of retrieval-augmented
+generation, fueled by a mix of an extensive body of knowledge on LLMs and a carefully selected
+dataset. It is a major advancement in AI-powered mechanical issue support, delivering accurate,
+useful guidance that can greatly reduce the burden of mechanical faults. This accomplishment not
+only raises the bar for future AI applications in domain-specific question answering and assistance
+systems, but it also improves the usefulness and accessibility of specialised information.
+46
+
+Chapter 10
+Improvisation of the RAG pipeline
+The creation of a mechanical RAG-powered question-answering system requires a thorough plan to
+guarantee the robustness of the RAG model as well as the effectiveness of the embeddings model that
+retrieves pertinent textual chunks. The system's ability to respond to a wide range of user inquiries is
+strengthened by adding a variety of mechanical knowledge sources, such as technical manuals and
+expert-generated information, to the training dataset. This deliberate extension improves the RAG
+model's capacity for generalisation, enabling it to offer contextually appropriate solutions in a variety
+of mechanical issue domains. Furthermore, adversarial training, for example, fine-tuning procedures,
+protect the model from malicious or misleading inputs, guaranteeing that generated replies are rooted
+in reality and do not become hallucinogenic.
+Moreover, the incorporation of more textual queries, expands the context that the RAG model can
+access and improves its comprehension of intricate mechanical issues. In addition to written
+descriptions, the system uses visual clues and spatial interactions to generate more precise and
+informative responses that meet the varied demands of users. A flexible response mechanism is mostly
+dependent on dynamic retrieval algorithms, which dynamically choose the most pertinent items from a
+broader corpus in accordance with user preferences and the context of the query. By using an adaptive
+method, the retrieval process becomes more efficient and effective, allowing the system to respond to
+user requests in a timely and contextually relevant manner.
+In order to refine the system iteratively and use user feedback to adjust the model to changing user
+demands and preferences, continuous monitoring and feedback methods are essential. Through the
+integration of user feedback into the training process, the system adapts to new problems and user
+demands, gradually increasing its resilience and user satisfaction. The system's dedication to provide
+precise, dependable, and contextually relevant replies is highlighted by this iterative improvement
+process, which strengthens its standing as a useful tool for both mechanical experts and amateurs. To
+sum up, the comprehensive method of system development and improvement guarantees that the
+RAG-based mechanical question-answering system will always be at the forefront of offering practical
+advice for mechanical troubleshooting, giving users the information and assistance they need to take
+on a variety of mechanical challenges.
+47
+
+Chapter 11
+References
+Serradilla, O., Zugasti, E., Rodriguez, J., & Zurutuza, U. (2022). Deep learning models for predictive
+maintenance: a survey, comparison, challenges and prospects. Applied Intelligence, 52(10),
+10934-10964.
+Cernuda, C. (2019). On the relevance of preprocessing in predictive maintenance for dynamic
+systems. Predictive maintenance in dynamic systems: Advanced methods, decision support tools and
+real-world applications, 53-93.
+K. Zarzycki and Maciej Ławryńczuk, “LSTM and GRU Neural Networks as Models of Dynamical
+Processes Used in Predictive Control: A Comparison of Models Developed for Two Chemical
+Reactors,” Sensors, vol. 21, no. 16, pp. 5625–5625, Aug. 2021, doi:
+https://doi.org/10.3390/s21165625.
+Akash Kesrwani, “Understanding Next Token Prediction: Concept To Code: 1st part!,” Medium,
+Sep.08, 2023.
+https://medium.com/@akash.kesrwani99/understanding-next-token-prediction-concept-to-code-1st-par
+t-7054dabda347 (accessed Apr. 20, 2024).
+Andrew, “How to use Retrieval-Augmented Generation (RAG) with Llama 2 - AGI Sphere,” AGI
+Sphere, Sep. 03, 2023. https://agi-sphere.com/retrieval-augmented-generation-llama2/ (accessed Apr.
+22, 2024).
+“langchain library and rag - Google Search,” Google.com, 2023.
+“next token prediction - Google Search,” Google.com, 2024.
+“masked token prediction - Google Search,” Google.com, 2024.
+48
+
+49

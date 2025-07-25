@@ -1,0 +1,31 @@
+
+Running the model using the terminal:
+1. Please head over to the “VASU_19MF3IM04” directory using
+the terminal.
+Steps: (Enter the commands in the below order)
+→ Go to D drive using the command “d:” or “D:”
+→ cd students
+→ cd VASU_19MF3IM04
+2. Use the command “dir” to view the directories. You will get to
+see these three directories “faiss_index”, “MTP_Files” and
+“mtp_venv”
+3. Now, activate the virtual environment using the command
+“mtp_venv\Scripts\activate”
+4. Head over to the MTP_Files directory using the command
+“cd MTP_Files”
+5. Run the Python file using “python app.py”
+6. After the successful running of the above file, use this
+command to run the Web application using “streamlit run
+UI.py”
+7. Here comes the web application to do question-answering
+All commands in one place:
+1. D: or d:
+2. cd students
+3. cd VASU_19MF3IM04
+4. dir
+5. mtp_venv\Scripts\activate
+6. cd MTP_Files
+7. python app.py
+8. streamlit run UI.py
+
+

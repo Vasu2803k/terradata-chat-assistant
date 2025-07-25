@@ -5,18 +5,22 @@ __pycache__/
 
 # Virtual environments
 .venv/
+!.venv/.gitkeep
 venv/
+!venv/.gitkeep
 ENV/
+!ENV/.gitkeep
 
 # Logs
-logs/
+logs/*
+!logs/.gitkeep
 *.log
 
 # Data and cache
-hf_cache/
-vector_db/
-output/
-input/
+hf_cache/*
+!hf_cache/.gitkeep
+vector_db/*
+!vector_db/.gitkeep
 
 # System files
 .DS_Store
@@ -27,7 +31,8 @@ Thumbs.db
 *.sqlite3
 
 # Streamlit and joblib cache
-frontend/data/
+frontend/data/*
+!frontend/data/.gitkeep
 
 # Environment variables and secrets
 .env

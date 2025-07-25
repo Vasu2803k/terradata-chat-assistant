@@ -1,0 +1,595 @@
+
+Health Stages Division and Identification of Fault Occurrence Time
+for Rolling Element Bearings Based on Hidden Markov Model
+Bachelor Thesis Project II
+By
+Katravath Vasu
+19MF3IM04
+Under the supervision of
+Prof. J Maiti
+Industrial and Systems Engineering
+Department of Industrial and Systems Engineering
+Indian Institute of Technology Kharagpur
+May 1, 2023
+
+DECLARATION
+I certify that
+(a) The work contained in this report has been done by me under the guidance of my supervisor.
+(b) The work has not been submitted to any other Institute for any degree or diploma.
+(c) I have conformed to the norms and guidelines given in the Ethical Code of Conduct of the
+Institute.
+(d) Whenever I have used materials (data, theoretical analysis, figures, and text) from other
+sources, I have given due credit to them by citing them in the text of the thesis and giving their
+details in the references. Further, I have taken permission from the copyright owners of the
+sources, whenever necessary.
+Date: May 1, 2023 Katravath
+Vasu
+1
+
+Place: Kharagpur
+19MF3IM04
+INDUSTRIAL AND SYSTEMS ENGINEERING
+INDIAN INSTITUTE OF TECHNOLOGY KHARAGPUR
+CERTIFICATE
+This is to certify that the project report entitled “Health stages division and identification of
+fault occurrence time for rolling element bearings based on Hidden Markov Model”
+submitted by Katravath Vasu (19MF3IM04) to the Indian Institute of Technology Kharagpur
+towards partial fulfillment of requirements for the award of the degree of Bachelor of
+Technology in Mechanical Engineering is a record of bona fide work carried out by him under
+our supervision and guidance during Spring Semester, 2023-24.
+2
+
+Prof. J Maiti
+Date: May 1, 2023 Industrial and Systems Engineering
+Place: Kharagpur Indian Institute of Technology Kharagpur
+Acknowledgement
+I would like to acknowledge and give special thanks to my supervisor Professor J Maiti,
+Department of Industrial and Systems Engineering, IIT Kharagpur for his keen interest,
+guidance, and support. I sincerely thank him for his insightful and critical suggestions and for
+his immense help during the course of the study. I also thank all the Department of Industrial
+and Systems Engineering professors for their valuable suggestions and motivation to complete
+my course. Their immense knowledge and valuable advice carried me through all the stages of
+my B. Tech project work, which would not have been possible without their supervision. I
+would also like to give my warmest thanks to the Research Scholar Suraj Gupta, Department of
+Industrial and Systems Engineering, and friends at IIT Kharagpur for their constant support and
+motivation throughout the course of my work.
+We acknowledge the Centre of Excellence in Safety Engineering and Analytics (CoE-SEA)
+(www.iitkgp.ac.in/department/SE), IIT Kharagpur, and Safety Analytics & Virtual Reality
+(SAVR) Laboratory (www.savr.iitkgp.ac.in) of the Department of Industrial & Systems
+Engineering, IIT Kharagpur for experimental/computational and research facilities for this
+work.
+3
+
+Contents
+Chapters Page no.
+Declaration i
+Certificate ii
+Acknowledgment iii
+Contents iv
+List of Figures and Tables v-vi
+Abstract vii
+1. Introduction 1
+2. Literature Review 4
+3. Objectives 5
+3.1 Dataset Description……………………………………………………. 5
+3.2 Data Acquisition Characteristics………………………………………. 7
+3.3 ASCII Files…………………………………………………………….. 8
+4. Methodology and Observations 9
+4.1 Bearings distributions………………………………………………….10
+4.2 Root mean square vs Number of samples……………………………...12
+4.3 Clustering of the vibrational data using K-Means Clustering………….14
+4.4 Construction of HMM and Characterization of health states…………..17
+4
+
+5. Conclusion 27
+6. References 28
+7. Appendix 30
+List of Figures
+1. Bearings and types of faults ………………………………………………........ 5
+2. Overview of PRONOSTIA …………………………………………………….. 6
+3. Normal and degraded bearing and the vibrational signal from an experiment ….6
+4. Illustration of acquisition parameters for vibrational signals…………………... 7
+5. Measurement part: accelerometers and temperature sensor …………………… 7
+6. (a) Vibrational signal vs time (bearing-1) ……………………………………. 10
+(b) Vibrational signal vs time (bearing-2) ……………………………………. 11
+(c) Vibrational signal vs time (bearing-3) …………………………………….. 11
+(d) Vibrational signal vs time (bearing-4) …………………………………….. 11
+7. (a) Root mean square vs number of samples of bearing -1……………………. 12
+(b) Root mean square vs number of samples of bearing -2 …………………… 12
+(c) Root mean square vs number of samples of bearing -3 …………………… 12
+(d) Root mean square vs number of samples of bearing -4 …………………… 13
+8. Illustration of the combined distribution of RMS vs number of samples …….. 13
+9. The Elbow method (WCSS vs Number of clusters) …………………………… 14
+10. (a) Health stages division using K-Means Clustering (bearing-1) …………….. 15
+(b) Health stages division using K-Means Clustering (bearing-2) ……………. 15
+(c) Health stages division using K-Means Clustering (bearing-3) ……………. 15
+(d) Health stages division using K-Means Clustering (bearing-4) ……………. 16
+11. (a) Health stages division using HMM of bearing -1 …………………………… 21
+(b) Health stages division using HMM of bearing -2 …………………………… 21
+(c) Health stages division using HMM of bearing -3 …………………………… 21
+5
+
+(d) Health stages division using HMM of bearing -4 …………………………… 22
+12. (a) Illustration of FOT and Failure of bearing 1 ………………………………….. 24
+(b) Illustration of FOT and Failure of bearing 2 ………………………………….. 24
+(c) Illustration of FOT and Failure of bearing 1 ………………………………….. 25
+(d) Illustration of FOT and Failure of bearing 1 ………………………………….. 25
+List of Tables
+1. FOT detection results…………………………………………………………… 23
+2. Failure time and Fault Occurrence time in seconds ……………………………. 26
+6
+
+Abstract
+This thesis focuses on health stages division and determining failure occurrence time prediction
+are two important parts of the safety study of rolling element bearings. In this thesis, the Hidden
+Markov Model (HMM) is used to divide the degradation stages of rolling element bearings.
+Given the success of HMMs with these applications, in particular with speech recognition that
+has a lot of similarity to machine diagnostics, there is great hope that they will be equally
+effective in diagnostic applications. Two side benefits are the existence of computationally
+efficient methods for system identification and computing of likelihoods using HMMs. Firstly,
+we extract the root mean square feature from the original vibration signal, then utilize the
+Viterbi algorithm to divide the degradation stages. Secondly, Fault occurrence time is
+determined according to the degradation stage with HMM. In order to verify the effectiveness of
+this method, IEE-PHM-2012 challenge data sets are adopted and a comparison with the existing
+methods is carried out.
+7
+
+Chapter 1
+1 Introduction
+In many industrial applications, bearings are critical components that must be monitored and
+maintained to ensure reliable operation. One way to achieve this is through condition-based
+maintenance (CBM). Condition Based Maintenance (CBM) is a maintenance strategy that
+involves using real-time data to make informed decisions about when to perform maintenance
+on equipment or machinery. The benefits of CBM include improved equipment reliability,
+reduced downtime, and lower maintenance costs. CBM can also help extend the lifespan of
+equipment and reduce the risk of catastrophic failure, which can have significant safety and
+financial implications. Health state estimation is an important part of CBM, as it provides a way
+to predict when maintenance is needed. In this report, we explore the use of the health state
+estimation of bearings in CBM. In general, the operational cost of rolling element bearings in
+CBM is lower than that of traditional maintenance approaches because CBM allows for early
+detection of potential issues and enables maintenance personnel to perform corrective actions
+before the damage becomes severe. This can help to prevent unexpected failures, reduce
+downtime, and lower the overall cost of maintenance. One of the primary benefits of CBM is
+that it can help to extend the lifespan of rolling element bearings. By diagnosing potential issues
+early, maintenance personnel can take corrective action to prevent further damage, which can
+help to prolong the life of the bearing and reduce the frequency of maintenance activities. This,
+in turn, can lead to reduced operational costs over the life of the machine.
+Another factor that can impact the operational cost of rolling element bearings in CBM is the
+type of CBM techniques and tools used. For example, some CBM techniques, such as vibration
+analysis or oil analysis, require specialized equipment and trained personnel, which can increase
+the cost of implementation. However, the long-term benefits of CBM can outweigh the initial
+costs by reducing maintenance and repair costs and improving overall machine performance.
+1
+
+In summary, the operational cost of rolling element bearings in CBM can vary depending on
+several factors, but in general, CBM can help to reduce the overall cost of maintenance by
+extending the lifespan of the bearing, reducing downtime, and preventing unexpected failures.
+While the implementation of CBM may require an initial investment in specialized equipment
+and training, the long-term benefits can result in significant cost savings over the life of the
+machine.
+Rolling element bearings are critical components of many machines, and they are designed to
+withstand the loads, speeds, and operating conditions of the machine. However, over time,
+rolling element bearings can experience various types of degradation and wear, which can lead
+to failure and costly repairs. To mitigate the risk of unexpected failures, maintenance strategies
+such as Condition-Based Maintenance (CBM) are implemented. CBM is a maintenance
+approach that involves monitoring the health of a machine and performing maintenance
+activities when needed based on the current condition of the machine. CBM uses various
+techniques to monitor the health of machines, including rolling element bearings, such as
+vibrational analysis, acoustic emission, and oil analysis.
+By monitoring the health of rolling element bearings, maintenance personnel can detect the
+onset of degradation and wear and take corrective action before the damage becomes severe.
+The division of health degradation of rolling element bearings is an essential aspect of CBM
+because it allows maintenance personnel to identify the type and severity of damage present in
+the bearing and to take appropriate corrective action to prevent further degradation and potential
+failure. There are various types of health degradation that can occur in rolling element bearings,
+including
+Surface damage: This type of degradation can occur due to poor lubrication, contamination, or
+improper installation. Surface damage can cause increased friction, heat, and wear, which can
+lead to premature failure.
+Fatigue: This type of degradation occurs due to cyclic loading, which can cause microcracks to
+form and propagate within the bearing material. Fatigue can lead to spalling, cracking, and
+ultimately, bearing failure.
+2
+
+Wear: This type of degradation occurs due to the abrasive action of particles or other materials
+that come into contact with the bearing. Wear can cause loss of material, which can affect the fit
+and function of the bearing.
+By understanding the different types of health degradation that can occur in rolling element
+bearings, maintenance personnel can use appropriate techniques to detect and diagnose the
+specific type of damage present. For example, vibration analysis can detect changes in vibration
+levels that may indicate surface damage, while oil analysis can detect the presence of wear
+particles or contaminants in the lubricant.
+3
+
+Chapter 2
+2 Literature Review
+It is advantageous to accurately foresee the failure occurrence time of mechanical equipment in
+order to increase equipment reliability and decrease the failure rate (Lee et al., 2014). However,
+continuous operation of mechanical equipment will result in progressive failure, and in general,
+continuous operation of the equipment demonstrates a clear degradation trend (Xiao et al.,
+2020). Traditional operation and maintenance methods and concepts are becoming increasingly
+inadequate for the equipment's normal operation. Prognostics and Health Management (PHM) is
+one of the equipment maintenance techniques that have emerged recently (Liu et al., 2018). In
+general, the program for predicting the health of equipment consists of four steps: data
+collection, health indicator (HI) construction, health stage division, and RUL prediction (Cheng
+et al., 2018). In actuality, it is not necessary to survey the entire life cycle of apparatus for RUL.
+Therefore, it is essential to monitor the equipment's condition. (Lei et al., 2018) The equipment
+can be divided into two distinct stages and multiple stages based on its various degradation
+tendencies. For the division of the health stage, the majority of published works artificially
+divide the degradation stage based on the trend change of vibration signal characteristics. (Saidi
+et al., 2015) combined EMD with artificial neural networks to classify defects and monitor the
+degradation state of full-life bearings. (Soualhi et al., 2013) used the changing trend of RMS as
+an index to partition the degradation stage, and then established an empirical threshold by
+observing. However, establishing the experience threshold manually is not universal.
+Using a method based on reinforcement learning through change, (Soualhi et al., 2013)
+proposed the use of points to categorize the health status. However, this approach is optimal for
+small samples only. To address the aforementioned issues, this project focuses primarily on
+resolving the division of health stages and determining the failure occurrence time. The primary
+contributions are categorized as follows: 1) Using the root-mean-square (RMS) of the original
+signal as the degraded feature, health stages can be divided and fault occurrence time can be
+detected using the Viterbi algorithm; and 2) utilizing actual failure time to calculate evaluation
+metrics based on FOT information.
+4
+
+Chapter 3
+3 Objectives
+The objectives of this project are the identification of the deteriorating health states of rolling
+element bearings for prognostics and the construction of a Hidden Markov Model for
+determining the failure occurrence time.
+Figure 1: Bearing and types of faults
+3.1 Dataset Description
+The PRONOSTIA platform enables run-to-failure performance tests (Bearings degradation:
+run-to-failure tests). In order to prevent the spread of damage to the entire testbed (and for
+safety reasons), testing was halted when the amplitude of the vibration signal exceeded 20g.
+Figure 3 depicts an example of what can be observed on ball-bearing components before and
+after an experiment, as well as a vibration unprocessed signal collected over the course of the
+experiment.
+Note that the deterioration of bearings demonstrates very distinct behaviors, resulting in very
+distinct experiment durations (until failure).
+5
+
+Figure 2: Overview of PRONOSTIA
+Figure 3: Normal and degraded bearings and the vibrational raw signal from an experiment
+6
+
+3.2 Data acquisition characteristics
+Both training and evaluation datasets were provided in 7z compressed containers. Each consists
+of vibration ASCII files titled acc_xxxxx.csv and temperature ASCII files titled
+temp_xxxxx.csv. The data acquisition parameters listed below must be thoroughly considered. -
+Vibration signals (horizontal and vertical) - Frequency of sampling: 25.6 kHz - Recordings:
+Every 10 seconds, 2560 samples (1/10 s) are recorded (see Fig. 6). - Temperature signals -
+Sampling rate: 10 Hertz Each minute, 600 samples are recorded.
+Figure 4: Illustration of acquisition parameters for vibrational signals
+Figure 5: Measurement part: accelerometers and temperature sensor
+7
+
+3.3 ASCII files
+The data in the ASCII file were arranged as mentioned in the below table:
+8
+
+Chapter 4
+4 Methodology and Observations
+The HMM approach involves three main steps: data preprocessing, Feature Extraction and
+HMM modeling. The first step involves collecting and preprocessing data from sensors attached
+to the bearings. This data typically includes vibration signals, temperature readings, and other
+information related to bearing health.
+The second step is feature extraction which deals with the extraction of the root mean square
+which is directly related to the energy content of the vibrational signal. This is done to identify
+patterns in the data that are related to specific health states of the bearings. Clustering can be
+performed using a variety of algorithms, such as k-means, hierarchical clustering, or
+density-based clustering.
+The final step is HMM modelling, which involves building a model that describes the
+relationship between the observed data and the underlying health states. HMMs are a type of
+probabilistic model that can capture the temporal dependencies between observations. In the
+case of bearings, HMMs can be used to model the transitions between different health states,
+such as normal, early degradation, and severe degradation. In the context of vibration analysis,
+RMS (Root Mean Square) values are commonly used to quantify the amplitude of a vibration
+signal. The RMS value is the square root of the mean (average) of the squared values of the
+signal over a given time period. It provides a measure of the effective or equivalent amplitude of
+the vibration signal, taking into account both the positive and negative excursions of the signal.
+Vibrational signals can be described using RMS to measure the energy content of the signal.
+Let's take the example of a machine vibration signal. When a machine is operating, it generates
+a vibration signal that can be measured using sensors. The vibration signal can be analyzed
+using various techniques, including RMS. In this case, the RMS value of the vibration signal
+indicates the energy content of the signal. The higher the RMS value of the vibration signal, the
+greater the energy in the vibration, which could indicate a higher level of machine activity or
+stress.
+9
+
+For instance, consider a scenario where a machine is vibrating at a constant frequency, but with
+different levels of intensity. If we measure the RMS value of the vibration signal over a period
+of time, we can determine the energy content level of the signal. If the RMS value is high, it
+indicates that the machine is generating a lot of vibration energy and may require maintenance
+or adjustment. On the other hand, if the RMS value is low, it indicates that the machine is
+operating normally, and the vibration levels are within acceptable limits.
+The distribution of the data collected over time and the root mean square vs the number of
+samples are listed below:
+4.1 Bearings distributions
+Figure 6: (a) Vibrational signals vs Time (Bearing-1)
+10
+
+(b) Vibrational signals vs Time (Bearing-2) (c) Vibrational signals vs Time (Bearing-3)
+(d) Vibrational signals vs Time (Bearing-4)
+11
+
+4.2 Root mean square vs Number of samples
+Figure 7: (a) RMS vs Number of samples collected over time(bearing-1)
+(b)RMS vs Number of samples(bearing-2) (c) RMS vs Number of samples(bearing-3)
+12
+
+(d)RMS vs Number of samples(bearing-4)
+Figure 8: Illustration of the combined distribution of RMS vs Number of samples
+13
+
+The above graph represents the degradation of health states from the infancy stage to ultimate
+failure. RMS value becomes zero at its ultimate failure point where the bearings cannot perform
+their required function. This plot provides a basic idea of clustering the dataset into different
+clusters with different RMS values which are then fed to the Hidden Markov Model to determine
+the current health state of the given bearing provided the data.
+4.3 Clustering of the vibrational data using K-Means Clustering
+We applied the k-means clustering algorithm to the selected features of the vibrational data. The
+optimal value of K was determined using the elbow method, which showed that the data can be
+effectively clustered into three groups. The k-means clustering algorithm was then applied to the
+data, and the resulting clusters were analyzed. (WCSS – Within Cluster Sum of Squares)
+Figure 9: The Elbow Method (WCSS vs Number of clusters)
+The optimal value of k turned out to be 3 for our vibrational data applied to the root mean square
+values of all bearings. The resulting clusters were analyzed to identify any patterns or anomalies.
+Cluster 3 had a high amplitude and low frequency, which may indicate a potential issue with the
+rolling element bearing. Cluster 2 had a high amplitude and high frequency, which may indicate
+normal bearing behavior. Cluster 1 had a low amplitude and high frequency, which may indicate
+the presence of noise or interference in the data.
+14
+
+We applied the k-means clustering algorithm to vibrational data collected from rolling element
+bearings and showed its effectiveness in detecting potential issues or anomalies in the data. The
+resulting clusters were analyzed to identify any patterns, which can help maintenance personnel
+to take proactive maintenance actions to prevent unexpected failures and downtime.
+The below graphs illustrate the clustering or division of health stages of each bearing:
+Figure 10: (a) Health stages division using K-means Clustering (bearing-1)
+15
+
+(b) Health stages division using K-means Clustering (bearing-2) (c) Health stages division using
+K-means Clustering (bearing-3)
+(d) Health stages division using K-means Clustering (bearing-4)
+From the above graph, it is evident that Cluster 1 is a state of good health, cluster 3 is a state of
+degraded health and Cluster 2 is a state of failure. However, K-Means clustering doesn’t provide
+accurate results due to its limitations. The limitations of K-Means clustering include the
+dependence on the initial choice of centroids, sensitivity to outliers, cannot handle non-linear
+boundaries, and assuming spherical clusters.
+Therefore, it is important to choose another approach that can classify the different health stages.
+So, this thesis helps in comparing the K-means clustering model and the proposed approach
+clustering using Hidden Markov Model.
+16
+
+4.4 Construction of HMM and Characterization of health states
+Basically, this model comes from the idea that observations are made at each state but the true
+state is hidden (Health states) and it must be inferred from observations (Vibrational signals).
+HMM involves the estimation of different parameters:
+1. Starting probabilities
+(i) = P(q(1) = i) ⇒ (q(t) is the state at time t)
+2. Transition probabilities
+A(i,j) = P(q(t+1) = j | q(t) = i) ⇒ where q(t) is the state at time t
+3. Emission probabilities
+B(j,k) = P(O(t) = k | q(t) = j) ⇒ where k is the value of the observation.
+Estimation of the combination of these parameters is done to get a trained Hidden Markov
+Model. λ= (𝛑, A, B) gives the combination of these parameters
+L(λ|O)= f(λ|O) (Observations are denoted by O)
+= P(λ|O)
+= (P(O|λ)*P(λ))/P(O) (Bayes theorem)
+P(O|λ) needs to be maximized to get the optimal sequence of hidden states
+We use a Forward-Backward algorithm (Viterbi) to identify the sequence with the highest
+probability using the backtracking technique.
+The Hidden Markov Model offers three modelling approaches:
+1. Using only the observed data, determine the model parameters.
+2. Estimate the optimal sequence of hidden states given the model's parameters and the observed
+data.
+3. Calculate the likelihood of the model given the model's parameters and observed data.
+17
+
+Viterbi algorithm
+The Viterbi algorithm is a dynamic programming algorithm that is used to find the most likely
+sequence of hidden states in a hidden Markov model (HMM). The algorithm was first proposed
+by Andrew Viterbi in 1967 and has since become a widely used algorithm in various fields,
+including speech recognition, natural language processing, and bioinformatics.
+The Viterbi algorithm uses a recursive approach to compute the most likely sequence of hidden
+states in an HMM. The algorithm works by maintaining a table of probabilities for each possible
+state at each time step, and then iteratively computing the most likely sequence of hidden states
+by considering the probabilities of transitioning from one state to another.
+Initialization: At the first-time step t=1, the probability of being in each possible state i is given
+by the initial state probabilities, denoted by π(i).
+Viterbi Algorithm Formula:
+δ(1, i) = π(i) * b_i(o1)
+where δ(1, i) represents the probability of being in state i at time t=1, and b_i(o1) represents the
+probability of observing the first output symbol o1 given that the system is in state i.
+Recursion: For each subsequent time step t=2 to T, the probability of being in each possible state
+i is calculated by considering the probability of transitioning from the previous state j to state i,
+multiplied by the probability of observing the current output symbol given that the system is in
+state i.
+Viterbi Algorithm Formula:
+δ(t, i) = max(δ(t-1,j) * a_ji * b_i(ot)) for all j where δ(t, i) represents the
+probability of being in state i at time t, a_ji represents the probability of transitioning from state j
+to state i, and b_i(ot) represents the probability of observing the current output symbol ot given
+that the system is in state i.
+The max operator in the above formula is used to choose the state j that maximizes the
+probability of transitioning from state j to state i at time t.
+18
+
+Termination: Once the final time step T has been reached, the most likely sequence of hidden
+states is obtained by backtracking the probabilities to find the sequence of states that maximizes
+the overall probability.
+Viterbi Algorithm Formula:
+s(T) = argmax(δ(T, i)) for all i where s(T) represents the most likely state at time T.
+By using the Viterbi algorithm, it is possible to efficiently compute the most likely sequence of
+hidden states in an HMM, making it a powerful tool for a wide range of applications. From the
+figures listed above, we can find that the degradation trends of Bearing 1 and Bearing 3 are
+relatively close while Bearing 2 and Bearing 4 are both in a rapid degradation situation, and the
+remaining three bearings are in the slow degradation stage.
+Once the feature vector has been extracted, it can be used as an input to train the HMM model.
+The initial values of A do not affect the initialization of model parameters. It would not impact
+the final result, so we can randomly initialize. However, the choice of the initial value for B
+significantly impacts the calculation result. This study uses the mixed Gaussian distribution as
+the observation probability density function, and its number is set to four. In general, the number
+of states is directly divided or clustered, and then the corresponding distribution is computed
+because of initialization. Utilizing the K-means clustering method for initialization is one of the
+more effective approaches.
+Following parameter initialization, the maximum number of iteration steps is set to 50. Given the
+present observation sequence and the completion of training, the current observation sequence
+can be divided into health stages.
+We have used “hmmlearn” library developed in Python which is a free source toolkit for working
+with Hidden Markov models. We can easily download the toolkit using pip which is a package
+manager for Python.
+19
+
+The code snippet is as follows.
+!pip install hmmlearn
+from hmmlearn import hmm
+# Given the observed data, estimation of model parameters # Guassian mixture emissions
+from hmmlearn import hmm
+# Initializing HMM
+hmm_model=hmm.GMMHMM(n_components=3, n_mix=4, n_iter=50, random_state=42,
+tol=0.0001)
+Hmm_model1
+Training of the initialized Hidden Markov Model is done with the help of bearing 1 and bearing
+2.
+hmm_model.fit(b11_rms. reshape (-1,1))
+hmm_model.fit(b12_rms. reshape (-1,1)), where b11_rms and b12_rms are the root mean
+square values of the vibrational signal samples collected over time.
+After the completion of the training, we can use “hmm_model” for prediction and the predicted
+values are used to classify the observations of testing bearings or the remaining bearings to
+determine the different health stages and fault occurrence time.
+20
+
+The graphs given below represent the classification of different health stages of 4 bearings using
+the Hidden Markov Model:
+Figure 11: (a) Health stages division using HMM of bearing-1
+Here, note that Cluster 1 represents the good health stage, Cluster 3 represents the degradation
+stage, and Cluster 2 - is the failure Stage.
+21
+
+(b) Health stages division using HMM of bearing-2
+(c) Health stages division using HMM of bearing-3
+22
+
+(d) Health stages division using HMM of bearing-4
+It is not difficult to see from the above figures that the method proposed for the four bearings
+succeeded to detect the FOT of bearings. The remaining bearings have been fully tested.
+Bearings 1 and 4 are more accurate than the other methods, which shows the effectiveness of the
+proposed method. Furthermore, the degradation stage division and FOT detection results are
+given under different working conditions in the below table. It shows that this method can
+effectively divide the health stage of the bearing and seize the FOT. From the graph, it is evident
+that Cluster 1 represents a state of good health, cluster 3 represents a state of degradation, and
+Cluster 2 represents a state of failure. Therefore, HMM model provides better results when
+compared to other methods.
+Table 1:
+23
+
+FOT detection results.
+Bearing Failure time Method 1 (Li et al., 2019) Method 2 (Zhu et al., 2020) HMM
+1 2803 1490 2118 2596
+2 871 827 826 851
+3 1802 1484 1413 1680
+4 1327 983 1082 1091
+Method 1 was used in the research paper published by (Li et al., 2019) and Method 2 was used in
+the research paper published by (Zhu et al., 2020). Our thesis is mainly focused on improving the
+determination of fault occurrence time and division of health stages using the Hidden Markov
+Model. The papers mentioned in the literature review dealt with the determination of FOT and
+remaining useful life which failed to divide or classify the different health stages. Fortunately,
+our thesis has improved the performance in the determination of FOT and succeeded in dividing
+the health stages.
+Illustration of Fault occurrence time(FOT) and Failure time of each bearing by plotting the graph
+Hidden States vs Number of Samples which represents the points of change. We multiply with
+10 to get the FOT in seconds as each sample is collected for 10 seconds.
+24
+TABLE: [['Bearing', 'Failure time', 'Method 1 (Li et al., 2019)', 'Method 2 (Zhu et al., 2020)', 'HMM'], ['1', '2803', '1490', '2118', '2596'], ['2', '871', '827', '826', '851'], ['3', '1802', '1484', '1413', '1680'], ['4', '1327', '983', '1082', '1091']]
+
+
+Figure 12: (a)Illustration of FOT and Failure of bearing 1
+(b) Illustration of FOT and Failure of bearing 2
+25
+
+(c) Illustration of FOT and Failure of bearing 3
+26
+
+(d) Illustration of FOT and Failure of bearing 4
+Table 2:
+Failure Time and Fault Occurrence Time in seconds
+Bearing Failure time (Seconds) HMM (FOT in seconds)
+1 28030 25960
+2 8710 8510
+3 18020 16800
+4 13270 10910
+From the above tables, it is evident that the Fault Occurrence Time of the 4 bearings is closer to
+the Failure Time which shows that the Hidden Markov Model is performing better than other
+models employed in various research papers. It is significantly important to predict the FOT To
+predict the remaining useful life (RUL) for the bearings. To predict RUL, we do specify the
+lower boundary and upper boundary to represent the failure occurrence time which should be
+generalized to all the rolling element bearings. Therefore, the FOT should be closer to the
+failure time of the bearing which would fall in the range of the boundaries specified.
+27
+TABLE: [['Bearing', 'Failure time (Seconds)', 'HMM (FOT in seconds)'], ['1', '28030', '25960'], ['2', '8710', '8510'], ['3', '18020', '16800'], ['4', '13270', '10910']]
+
+
+Chapter 5
+5. Conclusion
+In this thesis, the Hidden Markov Model is used for the division of degradation stages, and
+determining the fault occurrence time. The Viterbi algorithm is used to divide the degradation
+stages and obtain the FOT. Once the FOT is obtained, the performance of the model is
+evaluated. Experiments show that this method can effectively obtain the bearing degradation
+stage and detect the FOT. Based on the comparison with other models in determining fault
+occurrence time and health stages division, it can be concluded that the hidden Markov model
+has performed well. This indicates that your model has successfully captured the underlying
+patterns in the data and produced reliable results. However, further validation and testing of the
+model on a larger dataset may be necessary to fully establish its performance and
+generalizability. Overall, the success of this hidden Markov model in this application
+demonstrates its potential as a valuable tool in fault diagnosis and prognosis.
+In conclusion, HMMs are a promising approach for the health state estimation of bearings in
+CBM. By combining classical clustering techniques and HMM modeling, this approach can
+effectively capture the complex temporal dependencies in bearing data and provide accurate
+predictions of health states. As such, HMMs have the potential to improve the reliability and
+efficiency of industrial machinery, while reducing maintenance costs and downtime.
+28
+
+Chapter 6
+6. References
+Lee, J., Wu, F., Zhao, W., Ghaffari, M., Liao, L., & Siegel, D. (2014). Prognostics and health
+management design for rotary machinery systems—Reviews, methodology and applications.
+Mechanical systems and signal processing, 42(1-2), 314-334.
+Xiao, L., Liu, Z., Zhang, Y., Zheng, Y., & Cheng, C. (2020). Degradation assessment of
+bearings with trend-reconstruct-based features selection and gated recurrent unit network.
+Measurement, 165, 108064.
+Liu, Z., Jia, Z., Vong, C. M., Han, J., Yan, C., & Pecht, M. (2018). A patent analysis of
+prognostics and health management (PHM) innovations for electrical systems. IEEE Access, 6,
+18088-18107.
+Cheng, Y., Peng, J., Gu, X., Zhang, X., Liu, W., Yang, Y., & Huang, Z. (2018, June). RLCP: A
+reinforcement learning method for health stage division using change points. In 2018 IEEE
+International Conference on Prognostics and Health Management (ICPHM) (pp. 1-6). IEEE.
+Lei, Y., Li, N., Guo, L., Li, N., Yan, T., & Lin, J. (2018). Machinery health prognostics: A
+systematic review from data acquisition to RUL prediction. Mechanical systems and signal
+processing, 104, 799-834.
+Saidi, L., Ali, J. B., & Fnaiech, F. (2015). Application of higher order spectral features and
+support vector machines for bearing faults classification. ISA transactions, 54, 193-206.
+Soualhi, A., Razik, H., Clerc, G., & Doan, D. D. (2013). Prognosis of bearing failures using
+hidden Markov models and the adaptive neuro-fuzzy inference system. IEEE Transactions on
+Industrial Electronics, 61(6), 2864-2874.
+29
+
+Soualhi, A., Medjaher, K., & Zerhouni, N. (2014). Bearing health monitoring based on
+Hilbert–Huang transform, support vector machine, and regression. IEEE Transactions on
+instrumentation and measurement, 64(1), 52-62.
+Li, X., Zhang, W., & Ding, Q. (2019). Deep learning-based remaining useful life estimation of
+bearings using multi-scale feature extraction. Reliability engineering & system safety, 182,
+208-218.
+Zhu, J., Chen, N., & Shen, C. (2020). A new data-driven transferable remaining useful life
+prediction approach for bearing under different working conditions. Mechanical Systems and
+Signal Processing, 139, 106602.
+30
+
+Appendix
+The code snippets provided below are used for the Feature Extraction, construction of HMM,
+initializing its parameters with the help of K-Means Clustering, and which is used to determine
+the number of health stages.
+31
+
+32
+
+33
