@@ -13,10 +13,13 @@ logs/
 *.log
 
 # Data and cache
+docs/
 hf_cache/
 vector_db/
 output/
 input/
+frontend/data
+README.md
 
 # System files
 .DS_Store
