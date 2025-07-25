@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Logs
+logs/
+*.log
+
+# Data and cache
+hf_cache/
+vector_db/
+output/
+input/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Other
+*.pdf
+*.sqlite3 
